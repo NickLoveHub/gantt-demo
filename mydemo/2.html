@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="../codebase/dhtmlxgantt.js"></script>
+    <link href="../codebase/dhtmlxgantt.css" rel="stylesheet">
+    <script src="testdata.js?v=6.0.4"></script>
+    <script src="../codebase/ext/dhtmlxgantt_multiselect.js"></script>
+    <style>
+    /*    html, body ,div{
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+            overflow: hidden;
+        }*/
+        .gantt_task_content{
+            line-height: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="a">
+    <div>
+        <div style="height: 100%; padding: 0px;margin: 0px;overflow: hidden;">
+
+            <div id="gantt_here" style='width:100%; height:800px;'></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    var demo_tasks = {
+        "data": [
+            {"id": 11, "text": "ES8", type: gantt.config.types.project, "progress": 0.6, "open": true},
+            {"id": 12, "text": "ES8 G1.3", "start_date": "01-04-2019","end_date":"01-05-2019", "parent": "11", "progress": 1, "open": true},
+            {"id": 13, "text": "ES8 G1.F", "start_date": "01-05-2020", "end_date":"01-06-2020", "parent": "11", "progress": 0.5, "open": true},
+            {"id": 14, "text": "ES8 G1.5", "start_date": "01-06-2019", "end_date":"01-07-2019", "parent": "11", "progress": 0.8, "open": true},
+            {"id": 15, "text": "ES8 G1.6", "start_date": "01-07-2019","end_date":"01-08-2019", "parent": "11", "progress": 0.2, "open": true},
+            {"id": 16, "text": "ES8 G2.1", "start_date": "01-08-2021", "end_date":"01-09-2021", "parent": "11", "open": true}
+        ],
+        "links": [
+        ]
+    };
+
+    gantt.config.scale_unit = "year";  //"minute", "hour", "day", "week", "quarter", "month", "year"
+    gantt.config.step = 1;
+    //D 星期， j  d  几号，  F  月份, M 月份，W week,
+    gantt.config.date_scale = "%Y"; //Default value: "%d %M"；
+    gantt.config.subscales = [
+        {unit: "month", step: 1, date: "%F"}
+    ];
+    gantt.config.scale_height = 50;
+    gantt.config.min_column_width = 60;
+    gantt.config.order_branch = 'marker';
+    gantt.config.row_height = 45;
+
+    gantt.templates.task_text = function (start, end, task) {
+        var textArr = task.text.split(' ');
+        if(!textArr[1])
+            textArr[1] = '';
+//        return textArr[0] + " <br/> " + textArr[1];
+        return "<div>"+textArr[0] +"</div>"+ "<div>"+textArr[1] +"</div>";
+    };
+
+
+/*    gantt.templates.progress_text = function (start, end, task) {
+        return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+    };*/
+
+ /*   gantt.config.subscales = [
+//        {unit: "day", step: 1, date: "%j, %D"}
+        {unit: "hour", step: 3, date: "%H:%i"}
+    ];*/
+
+//    gantt.init("gantt_here", new Date(2018, 0, 1), new Date(2018, 12, 31));
+
+//    Lightboxes may differ depending on the type and peculiarities of tasks they are used for. Configuration settings for each type of a task are stored in the lightbox object. They are:
+//
+//        gantt.config.lightbox.sections - for regular tasks.
+//        gantt.config.lightbox.project_sections - for project tasks.
+//        gantt.config.lightbox.milestone_sections - for milestones.
+
+    var opts = [
+        { key: 1, label: 'High' },
+        { key: 2, label: 'Normal' },
+        { key: 3, label: 'Low' }
+    ];
+
+    gantt.locale.labels.section_details = "Details";
+    gantt.locale.labels.section_priority = "Priority";
+    gantt.locale.labels.section_time2 = "Action Duration";
+
+    gantt.config.lightbox.sections = [
+        {name:"description", height:38, map_to:"text", type:"textarea", focus:true},
+        {name:"details",     height:38, map_to:"text", type:"textarea"},
+        {name:"priority",    height:22, map_to:"priority", type:"select", options:opts},
+        {name:"time2",       height:72, map_to:"auto", type:"duration", time_format:["%d","%m","%Y","%H:%i"]},
+        {name:"time",        height:72, map_to:"auto", type:"duration"}
+    ];
+//  定义左侧、右侧 显示文字
+//    leftside_text
+    gantt.templates.rightside_text = function(start, end, task){
+        if(task.type == gantt.config.types.milestone){
+            return task.text;
+        }
+        return "";
+    };
+
+    gantt.init("gantt_here");
+    gantt.parse(demo_tasks);
+
+//    gantt.render();
+</script>
+</body>
+</html>
