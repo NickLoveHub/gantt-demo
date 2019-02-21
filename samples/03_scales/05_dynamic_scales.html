@@ -2,13 +2,13 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<title>Dynamic scales</title>
-	<script src="../../codebase/dhtmlxgantt.js?v=6.0.4"></script>
+	<script src="../../codebase/dhtmlxgantt.js?v=6.0.7"></script>
 
-	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css?v=6.0.4">
+	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css?v=6.0.7">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="../common/controls_styles.css?v=6.0.4">
+	<link rel="stylesheet" href="../common/controls_styles.css?v=6.0.7">
 
-	<script src="../common/testdata.js?v=6.0.4"></script>
+	<script src="../common/testdata.js?v=6.0.7"></script>
 	<style>
 		html, body {
 			height: 100%;
@@ -24,7 +24,8 @@
 	<input type="radio" id="scale1" class="gantt_radio" name="scale" value="1"/><label for="scale1"><i class="material-icons">radio_button_unchecked</i>Day scale</label>
 	<input type="radio" id="scale2" class="gantt_radio" name="scale" value="2"/><label for="scale2"><i class="material-icons">radio_button_unchecked</i>Week scale</label>
 	<input type="radio" id="scale3" class="gantt_radio" name="scale" value="3"/><label for="scale3"><i class="material-icons">radio_button_unchecked</i>Month scale</label>
-	<input type="radio" id="scale4" class="gantt_radio" name="scale" value="4" checked/><label class="checked_label" for="scale4"><i class="material-icons icon_color">radio_button_checked</i>Year scale</label>
+	<input type="radio" id="scale4" class="gantt_radio" name="scale" value="4"/><label for="scale4"><i class="material-icons">radio_button_unchecked</i>Quarter scale</label>
+	<input type="radio" id="scale5" class="gantt_radio" name="scale" value="5" checked/><label class="checked_label" for="scale5"><i class="material-icons icon_color">radio_button_checked</i>Year scale</label>
 </form>
 <div id="gantt_here" style='width:100%; height:600px;'></div>
 
@@ -65,12 +66,30 @@
 				gantt.templates.date_scale = null;
 				break;
 			case "4":
+				gantt.config.scale_unit = "month";
+				gantt.config.step = 1;
+				gantt.config.date_scale = "%M";
+
+				gantt.config.scale_height = 50;
+				gantt.templates.date_scale = null;
+
+				gantt.config.subscales = [
+					{
+						unit: "quarter", step: 1, template: function (date) {
+							var dateToStr = gantt.date.date_to_str("%M");
+							var endDate = gantt.date.add(gantt.date.add(date, 3, "month"), -1, "day");
+							return dateToStr(date) + " - " + dateToStr(endDate);
+						}
+					}
+				];
+				break;
+			case "5":
 				gantt.config.scale_unit = "year";
 				gantt.config.step = 1;
 				gantt.config.date_scale = "%Y";
 				gantt.config.min_column_width = 50;
 
-				gantt.config.scale_height = 90;
+				gantt.config.scale_height = 50;
 				gantt.templates.date_scale = null;
 
 
@@ -81,7 +100,7 @@
 		}
 	}
 
-	setScaleConfig('4');
+	setScaleConfig('5');
 
 	gantt.init("gantt_here", new Date(2018, 0, 1), new Date(2018, 8, 1));
 	gantt.parse(demo_tasks);

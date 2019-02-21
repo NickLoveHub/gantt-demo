@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script src="../codebase/dhtmlxgantt.js"></script>
-    <link href="../codebase/dhtmlxgantt.css" rel="stylesheet">
+    <script src="../codebase/dhtmlxgantt_nio.js"></script>
+    <link href="../codebase/dhtmlxgantt_nio.css" rel="stylesheet">
     <script src="testdata.js?v=6.0.4"></script>
     <script src="../codebase/ext/dhtmlxgantt_multiselect.js"></script>
     <style>
@@ -13,9 +13,23 @@
             margin: 0px;
             overflow: hidden;
         }*/
-        .gantt_task_content{
+  /*      .gantt_task_content{
             line-height: 20px;
-        }
+        }*/
+/*    .week_scale{ background-color: #13d4c8;}*/
+    .weekend{ background: #f4f7f4 ;}
+    .gantt_selected .weekend {
+        background: #f7eb91;
+    }
+    .nioBlue{
+        color: #ffffff !important;
+        background-color: #13d4c8;
+        border: 1px solid #13d4c8;
+    }
+  /*  .task_class_nio{
+        top:0px !important;
+    }*/
+
     </style>
 </head>
 <body>
@@ -31,36 +45,94 @@
 
     var demo_tasks = {
         "data": [
-            {"id": 11, "text": "ES8", type: gantt.config.types.project, "progress": 0.6, "open": true},
-            {"id": 12, "text": "ES8 G1.3", "start_date": "01-04-2019","end_date":"01-05-2019", "parent": "11", "progress": 1, "open": true},
-            {"id": 13, "text": "ES8 G1.F", "start_date": "01-05-2020", "end_date":"01-06-2020", "parent": "11", "progress": 0.5, "open": true},
-            {"id": 14, "text": "ES8 G1.5", "start_date": "01-06-2019", "end_date":"01-07-2019", "parent": "11", "progress": 0.8, "open": true},
-            {"id": 15, "text": "ES8 G1.6", "start_date": "01-07-2019","end_date":"01-08-2019", "parent": "11", "progress": 0.2, "open": true},
-            {"id": 16, "text": "ES8 G2.1", "start_date": "01-08-2021", "end_date":"01-09-2021", "parent": "11", "open": true}
+            {"id": 11, "text": "ES8", type: gantt.config.types.project,  "open": true, "assignee": "vxot", "progress": 0},
+            {"id": 12, "text": "ES8 G1.3", "start_date": "01-03-2019","end_date":"01-04-2019", "parent": "11", "open": true, "assignee": "vxot", "progress": 0.00},
+            {"id": 13, "text": "ES8 G1.F", "start_date": "11-03-2019", "end_date":"01-06-2019", "parent": "11",  "open": true, "assignee": "vxot", "progress": 0.00},
+            {"id": 14, "text": "ES8 G1.5", "start_date": "12-03-2019", "end_date":"13-03-2019", "parent": "11",  "open": true, "assignee": "vxot", "progress": 0.00},
+            {"id": 15, "text": "ES8 G1.6", "start_date": "01-03-2019","end_date":"01-08-2019", "parent": "11",  "open": true, "assignee": "vxot", "progress": 0.00},
+            {"id": 16, "text": "ES8 G2.1", "start_date": "05-03-2019", "end_date":"03-04-2019", "parent": "11", "open": true, "assignee": "vxot", "progress": 0.00}
         ],
         "links": [
         ]
     };
 
-    gantt.config.scale_unit = "year";  //"minute", "hour", "day", "week", "quarter", "month", "year"
+    gantt.config.columns = [
+        {name:"text",       label:"Project/Version/Issue",  min_width: 150, max_width:300, tree:true },
+        {name:"assignee", label:"Assignee", align:"center" },
+        {name:"start_date", label:"Start time", align:"center" },
+        {name:"end_date", label:"Finish time", align:"center" },
+        {name:"duration",   label:"Duration",   align:"center" },
+        {name:"progress",   label:"Percent",   align:"center", template:function(obj){
+            return ((parseFloat(obj.progress ).toFixed(4)) * 100).toFixed(0) + '%'; } },
+        {name:"add",        label:"",           width:44 }
+    ];
+
+/*    gantt.templates.scale_row_class = function(scale){
+        switch(scale.unit){
+            case "day":
+                return "day_scale";
+            case "month":
+                return "month_scale";
+            /!*case "year":
+                return "month_scale";*!/
+            default:// "week"
+                return "week_scale";
+        }
+    };*/
+
+    gantt.templates.grid_header_class = function(columnName, column){
+        return "nioBlue";
+    };
+
+    var daysStyle = function(date){
+        if(date.getDay()==0||date.getDay()==6){
+            return "weekend";
+        }else{
+            return "";
+        }
+    };
+
+    gantt.templates.task_cell_class = function (item, date) {
+        if (date.getDay() == 0 || date.getDay() == 6) {
+            return "weekend"
+        }
+    };
+
+/*    gantt.templates.task_class = function(start, end, task){return "task_class_nio";};
+    gantt.templates.task_row_class = function(start, end, task){
+        return "task_row_class_vxot";
+    };*/
+/*    gantt.config.work_time = true;
+    gantt.config.skip_off_time = true;
+    */
+
+    gantt.templates.scale_cell_class = function(date){
+        return 'nioBlue';
+    };
+
+
+    gantt.config.scale_unit = "week";  //"minute", "hour", "day", "week", "quarter", "month", "year"
     gantt.config.step = 1;
     //D 星期， j  d  几号，  F  月份, M 月份，W week,
-    gantt.config.date_scale = "%Y"; //Default value: "%d %M"；
+    gantt.config.date_scale = "%d %M %Y"; //Default value: "%d %M"；
     gantt.config.subscales = [
-        {unit: "month", step: 1, date: "%F"}
+        {unit: "day", step: 1, date: "%D", css: daysStyle}
     ];
     gantt.config.scale_height = 50;
     gantt.config.min_column_width = 60;
     gantt.config.order_branch = 'marker';
-    gantt.config.row_height = 45;
+    gantt.config.task_height = 15;
+//    gantt.config.row_height = 105; //定义 行高（非首行）
+//    gantt.config.scale_height = 154; // 定义 首行高度
 
-    gantt.templates.task_text = function (start, end, task) {
-        var textArr = task.text.split(' ');
-        if(!textArr[1])
-            textArr[1] = '';
-//        return textArr[0] + " <br/> " + textArr[1];
-        return "<div>"+textArr[0] +"</div>"+ "<div>"+textArr[1] +"</div>";
-    };
+
+    /*    gantt.templates.task_text = function (start, end, task) {
+            var textArr = task.text.split(' ');
+            if(!textArr[1])
+                textArr[1] = '';
+    //        return textArr[0] + " <br/> " + textArr[1];
+            return "<div>"+textArr[0] +"</div>"+ "<div>"+textArr[1] +"</div>";
+        };*/
 
 
 /*    gantt.templates.progress_text = function (start, end, task) {

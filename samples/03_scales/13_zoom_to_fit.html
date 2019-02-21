@@ -3,10 +3,10 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<title>Zoom To Fit</title>
-	<script src="../../codebase/dhtmlxgantt.js?v=6.0.4"></script>
-	<script src="../common/testdata.js?v=6.0.4"></script>
-	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css?v=6.0.4">
-	<link rel="stylesheet" href="../common/controls_styles.css?v=6.0.4">
+	<script src="../../codebase/dhtmlxgantt.js?v=6.0.7"></script>
+	<script src="../common/testdata.js?v=6.0.7"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css?v=6.0.7">
+	<link rel="stylesheet" href="../common/controls_styles.css?v=6.0.7">
 
 	<style>
 		html, body {
@@ -75,7 +75,7 @@
 		gantt.config.step = config.step;
 		gantt.config.subscales = config.subscales;
 
-		if (dates) {
+		if (dates && dates.start_date && dates.start_date) {
 			gantt.config.start_date = gantt.date.add(dates.start_date, -1, config.unit);
 			gantt.config.end_date = gantt.date.add(gantt.date[config.unit + "_start"](dates.end_date), 2, config.unit);
 		} else {
