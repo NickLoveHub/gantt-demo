@@ -15774,11 +15774,17 @@ var drawer = {
 };
 
 var path_builder = {
-
+    current_pos: null,
+    dirs: {left: "left", right: "right", up: "up", down: "down"},
 	path: [],
-	clear: function () {
+/*	clear: function () {
 		this.path = [];
-	},
+	},*/
+	//pro
+    clear: function () {
+        this.current_pos = null, this.path = []
+    },
+	//pro
 	current: function () {
 		return this.path[this.path.length - 1];
 	},
