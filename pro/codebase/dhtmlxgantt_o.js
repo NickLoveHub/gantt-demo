@@ -91,8 +91,7 @@ This software is covered by DHTMLX Evaluation License. Contact sales@dhtmlx.com 
                 return new a(t, e)
             }
         }
-    },
-        function (t, e) {
+    }, function (t, e) {
         function i(t) {
             var e = 0, i = 0, n = 0, r = 0;
             if (t.getBoundingClientRect) {
@@ -991,8 +990,7 @@ This software is covered by DHTMLX Evaluation License. Contact sales@dhtmlx.com 
             }
         }, r.mixin(l.prototype, s()), t.exports = l
     }, , function (t, e, i) {
-    },
-        function (t, e) {
+    }, function (t, e) {
         t.exports = function (t) {
             t.locale = {
                 date: {
@@ -4261,343 +4259,98 @@ This software is covered by DHTMLX Evaluation License. Contact sales@dhtmlx.com 
         }, t.exports = o
     }, function (t, e) {
         t.exports = function (t) {
-
-
-            function _render_task_element(task, view) {
-                var config = view.$getConfig();
-                var painters = config.type_renderers;
-                var renderer = painters[gantt.getTaskType(task.type)],
-                    defaultRenderer = _task_default_render;/*"./sources/core/ui/render/task_bar_render.js":*/
-
-                if (!renderer) {
-                    return defaultRenderer.call(gantt, task, view);
-                }else{
-                    return renderer.call(gantt, task, function(task){ return defaultRenderer.call(gantt, task, view);}, view);
-                }
-            }
-
-            function _task_default_render(task, view) {
-                if (gantt._isAllowedUnscheduledTask(task))
-                    return;
-
-
-                var pos = view.getItemPosition(task);
-
-                var cfg = view.$getConfig(),
-                    templates = view.$getTemplates();
-                var height = view.getItemHeight();
-
-                var taskType = gantt.getTaskType(task.type);
-
-                var padd = Math.floor((gantt.config.row_height - height) / 2);
-                if (taskType == cfg.types.milestone && cfg.link_line_width > 1) {
-                    //little adjust milestone position, so horisontal corners would match link arrow when thickness of link line is more than 1px
-                    padd += 1;
-                }
-
-                if (taskType == cfg.types.milestone){
-                    pos.left -= Math.round(height / 2);
-                    pos.width = height;
-                }
-
-                var div = document.createElement("div");
-
-                var width = Math.round(pos.width);
-
-                if(view.$config.item_attribute){
-                    div.setAttribute(view.$config.item_attribute, task.id);
-                }
-
-                if (cfg.show_progress && taskType != cfg.types.milestone) {
-                    _render_task_progress(task, div, width, cfg, templates);
-                }
-
-                //use separate div to display content above progress bar
-                var content = _render_task_content(task, width, templates);
-                if (task.textColor) {
-                    content.style.color = task.textColor;
-                }
-                div.appendChild(content);
-
-                var css = _combine_item_class("gantt_task_line",
-                    templates.task_class(task.start_date, task.end_date, task),
-                    task.id,
-                    view);
-                if (task.color || task.progressColor || task.textColor) {
-                    css += " gantt_task_inline_color";
-                }
-                div.className = css;
-
-                //vxot 修改task居上
-                var styles = [
-                    "left:" + pos.left + "px",
-                    "top:" + ( pos.top) + 'px',
-                    // "top:" + (padd + pos.top) + 'px',
-                    "height:" + height + 'px',
-                    "line-height:" + (Math.max(height < 30 ? height - 2 : height, 0)) + 'px',
-                    "width:" + width + 'px'
-                ];
-                //vxot end
-                if (task.color) {
-                    styles.push("background-color:" + task.color);
-                }
-                if (task.textColor) {
-                    styles.push("color:" + task.textColor);
-                }
-
-                div.style.cssText = styles.join(";");
-                var side = _render_leftside_content(task, cfg, templates);
-                if (side) div.appendChild(side);
-
-                side = _render_rightside_content(task, cfg, templates);
-                if (side) div.appendChild(side);
-
-                gantt._waiAria.setTaskBarAttr(task, div);
-
-                var state = gantt.getState();
-
-                if (!gantt.isReadonly(task)) {
-                    if (cfg.drag_resize && !gantt.isSummaryTask(task) && taskType != cfg.types.milestone) {
-                        _render_pair(div, "gantt_task_drag", task, function (css) {
-                            var el = document.createElement("div");
-                            el.className = css;
-                            return el;
-                        }, cfg);
-                    }
-                    if (cfg.drag_links && cfg.show_links) {
-                        _render_pair(div, "gantt_link_control", task, function (css) {
-                            var outer = document.createElement("div");
-                            outer.className = css;
-                            outer.style.cssText = [
-                                "height:" + height + 'px',
-                                "line-height:" + height + 'px'
-                            ].join(";");
-                            var inner = document.createElement("div");
-                            inner.className = "gantt_link_point";
-
-                            var showLinkPoints = false;
-                            if(state.link_source_id && cfg.touch){
-                                showLinkPoints = true;
-                            }
-
-                            inner.style.display = showLinkPoints ? "block" : "";
-                            outer.appendChild(inner);
-                            return outer;
-                        }, cfg);
-                    }
-                }
-                return div;
-            }
-
-            function _render_side_content(task, template, cssClass) {
-                if (!template) return null;
-
-                var text = template(task.start_date, task.end_date, task);
-                if (!text) return null;
-                var content = document.createElement("div");
-                content.className = "gantt_side_content " + cssClass;
-                content.innerHTML = text;
-                return content;
-            }
-
-            function _render_leftside_content(task, cfg, templates) {
-                var css = "gantt_left " + _get_link_crossing_css(!cfg.rtl ? true : false, task, cfg);
-                return _render_side_content(task, templates.leftside_text, css);
-            }
-
-            function _render_rightside_content(task, cfg, templates) {
-                var css = "gantt_right " + _get_link_crossing_css(!cfg.rtl ? false : true, task, cfg);
-                return _render_side_content(task, templates.rightside_text, css);
-            }
-
-            function _get_link_crossing_css(left, task) {
-                var cond = _get_conditions(left);
-
-                for (var i in cond) {
-                    var links = task[i];
-                    for (var ln = 0; ln < links.length; ln++) {
-                        var link = gantt.getLink(links[ln]);
-
-                        for (var tp = 0; tp < cond[i].length; tp++) {
-                            if (link.type == cond[i][tp]) {
-                                return "gantt_link_crossing";
-                            }
+            function e(e, a) {
+                if (!t._isAllowedUnscheduledTask(e)) {
+                    var o = a.getItemPosition(e), s = a.$getConfig(), l = a.$getTemplates(), c = a.getItemHeight(),
+                        u = t.getTaskType(e.type), d = Math.floor((t.config.row_height - c) / 2);
+                    u == s.types.milestone && s.link_line_width > 1 && (d += 1), u == s.types.milestone && (o.left -= Math.round(c / 2), o.width = c);
+                    var h = document.createElement("div"), f = Math.round(o.width);
+                    a.$config.item_attribute && h.setAttribute(a.$config.item_attribute, e.id), s.show_progress && u != s.types.milestone && function (e, i, n, r, a) {
+                        var o = 1 * e.progress || 0;
+                        n = Math.max(n - 2, 0);
+                        var s = document.createElement("div"), l = Math.round(n * o);
+                        l = Math.min(n, l), e.progressColor && (s.style.backgroundColor = e.progressColor, s.style.opacity = 1), s.style.width = l + "px", s.className = "gantt_task_progress", s.innerHTML = a.progress_text(e.start_date, e.end_date, e), r.rtl && (s.style.position = "absolute", s.style.right = "0px");
+                        var c = document.createElement("div");
+                        if (c.className = "gantt_task_progress_wrapper", c.appendChild(s), i.appendChild(c), t.config.drag_progress && !t.isReadonly(e)) {
+                            var u = document.createElement("div"), d = l;
+                            r.rtl && (d = n - l), u.style.left = d + "px", u.className = "gantt_task_progress_drag", s.appendChild(u), i.appendChild(u)
                         }
+                    }(e, h, f, s, l);
+                    var _ = function (e, i, n) {
+                        var r = document.createElement("div");
+                        return t.getTaskType(e.type) != t.config.types.milestone && (r.innerHTML = n.task_text(e.start_date, e.end_date, e)), r.className = "gantt_task_content", r
+                    }(e, 0, l);
+                    e.textColor && (_.style.color = e.textColor), h.appendChild(_);
+                    var g = function (e, i, n, r) {
+                        var a = r.$getConfig(), o = [e];
+                        i && o.push(i);
+                        var s = t.getState(), l = t.getTask(n);
+                        if (t.getTaskType(l.type) == a.types.milestone ? o.push("gantt_milestone") : t.getTaskType(l.type) == a.types.project && o.push("gantt_project"), o.push("gantt_bar_" + t.getTaskType(l.type)), t.isSummaryTask(l) && o.push("gantt_dependent_task"), t.isSplitTask(l) && o.push("gantt_split_parent"), a.select_task && n == s.selected_task && o.push("gantt_selected"), n == s.drag_id && (o.push("gantt_drag_" + s.drag_mode), s.touch_drag && o.push("gantt_touch_" + s.drag_mode)), s.link_source_id == n && o.push("gantt_link_source"), s.link_target_id == n && o.push("gantt_link_target"), a.highlight_critical_path && t.isCriticalTask && t.isCriticalTask(l) && o.push("gantt_critical_task"), s.link_landing_area && s.link_target_id && s.link_source_id && s.link_target_id != s.link_source_id) {
+                            var c = s.link_source_id, u = s.link_from_start, d = s.link_to_start,
+                                h = t.isLinkAllowed(c, n, u, d), f = "";
+                            f = h ? d ? "link_start_allow" : "link_finish_allow" : d ? "link_start_deny" : "link_finish_deny", o.push(f)
+                        }
+                        return o.join(" ")
+                    }("gantt_task_line", l.task_class(e.start_date, e.end_date, e), e.id, a);
+                    (e.color || e.progressColor || e.textColor) && (g += " gantt_task_inline_color"), h.className = g;
+                    var p = ["left:" + o.left + "px", "top:" + (d + o.top) + "px", "height:" + c + "px", "line-height:" + Math.max(c < 30 ? c - 2 : c, 0) + "px", "width:" + f + "px"];
+                    e.color && p.push("background-color:" + e.color), e.textColor && p.push("color:" + e.textColor), h.style.cssText = p.join(";");
+                    var v = function (t, e, r) {
+                        var a = "gantt_left " + n(!e.rtl, t);
+                        return i(t, r.leftside_text, a)
+                    }(e, s, l);
+                    v && h.appendChild(v), (v = function (t, e, r) {
+                        var a = "gantt_right " + n(!!e.rtl, t);
+                        return i(t, r.rightside_text, a)
+                    }(e, s, l)) && h.appendChild(v), t._waiAria.setTaskBarAttr(e, h);
+                    var m = t.getState();
+                    return t.isReadonly(e) || (s.drag_resize && !t.isSummaryTask(e) && u != s.types.milestone && r(h, "gantt_task_drag", e, function (t) {
+                        var e = document.createElement("div");
+                        return e.className = t, e
+                    }, s), s.drag_links && s.show_links && r(h, "gantt_link_control", e, function (t) {
+                        var e = document.createElement("div");
+                        e.className = t, e.style.cssText = ["height:" + c + "px", "line-height:" + c + "px"].join(";");
+                        var i = document.createElement("div");
+                        i.className = "gantt_link_point";
+                        var n = !1;
+                        return m.link_source_id && s.touch && (n = !0), i.style.display = n ? "block" : "", e.appendChild(i), e
+                    }, s)), h
+                }
+            }
+
+            function i(t, e, i) {
+                if (!e) return null;
+                var n = e(t.start_date, t.end_date, t);
+                if (!n) return null;
+                var r = document.createElement("div");
+                return r.className = "gantt_side_content " + i, r.innerHTML = n, r
+            }
+
+            function n(e, i) {
+                var n = function (e) {
+                    return e ? {
+                        $source: [t.config.links.start_to_start],
+                        $target: [t.config.links.start_to_start, t.config.links.finish_to_start]
+                    } : {
+                        $source: [t.config.links.finish_to_start, t.config.links.finish_to_finish],
+                        $target: [t.config.links.finish_to_finish]
                     }
-                }
-                return "";
+                }(e);
+                for (var r in n) for (var a = i[r], o = 0; o < a.length; o++) for (var s = t.getLink(a[o]), l = 0; l < n[r].length; l++) if (s.type == n[r][l]) return "gantt_link_crossing";
+                return ""
             }
 
-
-            function _render_task_content(task, width, templates) {
-                var content = document.createElement("div");
-                if (gantt.getTaskType(task.type) != gantt.config.types.milestone)
-                    content.innerHTML = templates.task_text(task.start_date, task.end_date, task);
-                content.className = "gantt_task_content";
-                //content.style.width = width + 'px';
-                return content;
+            function r(e, i, n, r, a) {
+                var o, s = t.getState();
+                +n.start_date >= +s.min_date && ((o = r([i, a.rtl ? "task_right" : "task_left", "task_start_date"].join(" "))).setAttribute("data-bind-property", "start_date"), e.appendChild(o)), +n.end_date <= +s.max_date && ((o = r([i, a.rtl ? "task_left" : "task_right", "task_end_date"].join(" "))).setAttribute("data-bind-property", "end_date"), e.appendChild(o))
             }
 
-            function _render_task_progress(task, element, maxWidth, cfg, templates) {
-                var done = task.progress * 1 || 0;
-
-                maxWidth = Math.max(maxWidth - 2, 0);//2px for borders
-                var pr = document.createElement("div");
-                var width = Math.round(maxWidth * done);
-
-                width = Math.min(maxWidth, width);
-                if (task.progressColor) {
-                    pr.style.backgroundColor = task.progressColor;
-                    pr.style.opacity = 1;
-                }
-                pr.style.width = width + 'px';
-                pr.className = "gantt_task_progress";
-                pr.innerHTML = templates.progress_text(task.start_date, task.end_date, task);
-
-                if(cfg.rtl){
-                    pr.style.position = "absolute";
-                    pr.style.right = "0px";
-                }
-
-                var wrapper = document.createElement("div");
-                wrapper.className = "gantt_task_progress_wrapper";
-                wrapper.appendChild(pr);
-                element.appendChild(wrapper);
-
-                if (gantt.config.drag_progress && !gantt.isReadonly(task)) {
-                    var drag = document.createElement("div");
-
-                    var markerPos = width;
-                    if(cfg.rtl){
-                        markerPos = maxWidth - width;
-                    }
-
-                    drag.style.left = markerPos + 'px';
-                    drag.className = "gantt_task_progress_drag";
-                    pr.appendChild(drag);
-                    element.appendChild(drag);
-                }
+            return function (i, n) {
+                var r = n.$getConfig().type_renderers[t.getTaskType(i.type)], a = e;
+                return r ? r.call(t, i, function (e) {
+                    return a.call(t, e, n)
+                }, n) : a.call(t, i, n)
             }
-
-            function _get_conditions(leftside) {
-                if (leftside) {
-                    return {
-                        $source: [
-                            gantt.config.links.start_to_start
-                        ],
-                        $target: [
-                            gantt.config.links.start_to_start,
-                            gantt.config.links.finish_to_start
-                        ]
-                    };
-                } else {
-                    return {
-                        $source: [
-                            gantt.config.links.finish_to_start,
-                            gantt.config.links.finish_to_finish
-                        ],
-                        $target: [
-                            gantt.config.links.finish_to_finish
-                        ]
-                    };
-                }
-            }
-
-            function _combine_item_class(basic, template, itemId, view) {
-                var cfg = view.$getConfig();
-                var css = [basic];
-                if (template)
-                    css.push(template);
-
-                var state = gantt.getState();
-
-                var task = gantt.getTask(itemId);
-
-                if (gantt.getTaskType(task.type) == cfg.types.milestone) {
-                    css.push("gantt_milestone");
-                }else if (gantt.getTaskType(task.type) == cfg.types.project) {
-                    css.push("gantt_project");
-                }
-
-                css.push("gantt_bar_" + gantt.getTaskType(task.type));
-
-
-                if (gantt.isSummaryTask(task))
-                    css.push("gantt_dependent_task");
-
-                if (gantt.isSplitTask(task)) {
-                    css.push("gantt_split_parent");
-                }
-
-                if (cfg.select_task && itemId == state.selected_task)
-                    css.push("gantt_selected");
-
-                if (itemId == state.drag_id) {
-                    css.push("gantt_drag_" + state.drag_mode);
-                    if (state.touch_drag) {
-                        css.push("gantt_touch_" + state.drag_mode);
-                    }
-                }
-
-                if (state.link_source_id == itemId)
-                    css.push("gantt_link_source");
-
-                if (state.link_target_id == itemId)
-                    css.push("gantt_link_target");
-
-
-                if (cfg.highlight_critical_path && gantt.isCriticalTask) {
-                    if (gantt.isCriticalTask(task))
-                        css.push("gantt_critical_task");
-                }
-
-                if (state.link_landing_area &&
-                    (state.link_target_id && state.link_source_id) &&
-                    (state.link_target_id != state.link_source_id)) {
-
-                    var from_id = state.link_source_id;
-                    var from_start = state.link_from_start;
-                    var to_start = state.link_to_start;
-
-                    var allowDrag = gantt.isLinkAllowed(from_id, itemId, from_start, to_start);
-
-                    var dragClass = "";
-                    if (allowDrag) {
-                        if (to_start)
-                            dragClass = "link_start_allow";
-                        else
-                            dragClass = "link_finish_allow";
-                    } else {
-                        if (to_start)
-                            dragClass = "link_start_deny";
-                        else
-                            dragClass = "link_finish_deny";
-                    }
-                    css.push(dragClass);
-                }
-                return css.join(" ");
-            }
-
-            function _render_pair(parent, css, task, content, config) {
-                var state = gantt.getState();
-                var className, element;
-                if (+task.start_date >= +state.min_date) {
-                    className = [css, config.rtl ? "task_right" : "task_left", "task_start_date"];
-                    element = content(className.join(" "));
-                    element.setAttribute("data-bind-property", "start_date");
-                    parent.appendChild(element);
-                }
-
-                if (+task.end_date <= +state.max_date){
-                    className = [css, config.rtl ? "task_left" : "task_right", "task_end_date"];
-                    element = content(className.join(" "));
-                    element.setAttribute("data-bind-property", "end_date");
-                    parent.appendChild(element);
-                }
-
-            }
-
-            return _render_task_element;
         }
     }, function (t, e, i) {
         var n = i(0), r = i(38), a = i(16), o = i(2), s = function (t) {
@@ -9286,8 +9039,7 @@ This software is covered by DHTMLX Evaluation License. Contact sales@dhtmlx.com 
                 }
             }
         }
-    },
-        function (t, e, i) {
+    }, function (t, e, i) {
         var n = i(1);
         t.exports = {
             init: function (t, e) {
@@ -9366,8 +9118,7 @@ This software is covered by DHTMLX Evaluation License. Contact sales@dhtmlx.com 
                 }
             }
         }
-    },
-        function (t, e, i) {
+    }, function (t, e, i) {
         var n = i(0), r = i(111), a = i(110), o = function (t) {
             return {
                 onCreated: function (e) {
@@ -9424,8 +9175,7 @@ This software is covered by DHTMLX Evaluation License. Contact sales@dhtmlx.com 
             }
         };
         t.exports = o
-    },
-        function (t, e, i) {
+    }, function (t, e, i) {
         var n = i(3);
         t.exports = function (t) {
             return function (e, i) {
@@ -9455,540 +9205,202 @@ This software is covered by DHTMLX Evaluation License. Contact sales@dhtmlx.com 
                 return k.style.height = w + "px", k.style.lineHeight = w + "px", a.smart_rendering && (k.style.position = "absolute", k.style.left = "0px", k.style.top = i.getItemTop(e.id) + "px"), i.$config.item_attribute && k.setAttribute(i.$config.item_attribute, e.id), t._waiAria.taskRowAttr(e, k), k.innerHTML = l.join(""), k
             }
         }
-    },
-        function (t, e) {
+    }, function (t, e) {
         t.exports = function (t) {
-            var gantt = t;
-            function _render_link_element(link, view) {
-                var config = view.$getConfig();
-
-                var pt = path_builder.get_endpoint(link, view);
-                var dy = pt.e_y - pt.y;
-                var dx = pt.e_x - pt.x;
-                if(!dx && !dy){
-                    return null;
-                }
-
-
-                var dots = path_builder.get_points(link, view);
-                var lines = drawer.get_lines(dots, view);
-
-                var div = document.createElement("div");
-
-                var css = "gantt_task_link";
-
-                if (link.color) {
-                    css += " gantt_link_inline_color";
-                }
-                var cssTemplate = gantt.templates.link_class ? gantt.templates.link_class(link) : "";
-                if (cssTemplate) {
-                    css += " " + cssTemplate;
-                }
-
-                if (config.highlight_critical_path && gantt.isCriticalLink) {
-                    if (gantt.isCriticalLink(link))
-                        css += " gantt_critical_link";
-                }
-
-                div.className = css;
-
-                if(view.$config.link_attribute){
-                    div.setAttribute(view.$config.link_attribute, link.id);
-                }
-
-                for (var i = 0; i < lines.length; i++) {
-                    if (i == lines.length - 1) {
-                        lines[i].size -= config.link_arrow_size;
-                    }
-                    var el = drawer.render_line(lines[i], lines[i + 1], view);
-                    if (link.color) {
-                        el.firstChild.style.backgroundColor = link.color;
-                    }
-                    div.appendChild(el);
-                }
-
-                var direction = lines[lines.length - 1].direction;
-                var endpoint = _render_link_arrow(dots[dots.length - 1], direction, view);
-                if (link.color) {
-                    endpoint.style.borderColor = link.color;
-                }
-                div.appendChild(endpoint);
-
-                gantt._waiAria.linkAttr(link, div);
-
-                return div;
-            }
-
-            function _render_link_arrow(point, direction, view) {
-                var config = view.$getConfig();
-                var div = document.createElement("div");
-                var top = point.y;
-                var left = point.x;
-
-                var size = config.link_arrow_size;
-                var line_width = config.row_height;
-                var className = "gantt_link_arrow gantt_link_arrow_" + direction;
-                switch (direction) {
-                    case drawer.dirs.right:
-                        top -= (size - line_width) / 2;
-                        left -= size;
-                        break;
-                    case drawer.dirs.left:
-                        top -= (size - line_width) / 2;
-                        break;
-                    case drawer.dirs.up:
-                        left -= size;
-                        break;
-                    case drawer.dirs.down:
-                        top += size * 2;
-                        left -= size;
-                        break;
-                    default:
-                        break;
-                }
-                div.style.cssText = [
-                    "top:" + top + "px",
-                    "left:" + left + 'px'].join(';');
-                div.className = className;
-
-                return div;
-            }
-            var drawer = {
-                current_pos: null,
-                dirs: {"left": 'left', "right": 'right', "up": 'up', "down": 'down'},
-                path: [],
-                clear: function () {
-                    this.current_pos = null;
-                    this.path = [];
-                },
-                point: function (pos) {
-                    this.current_pos = gantt.copy(pos);
-                },
-                get_lines: function (dots) {
-                    this.clear();
-                    this.point(dots[0]);
-                    for (var i = 1; i < dots.length; i++) {
-                        this.line_to(dots[i]);
-                    }
-                    return this.get_path();
-                },
-                line_to: function (pos) {
-                    var next = gantt.copy(pos);
-                    var prev = this.current_pos;
-
-                    var line = this._get_line(prev, next);
-                    this.path.push(line);
-                    this.current_pos = next;
-                },
-                get_path: function () {
-                    return this.path;
-                },
-                get_wrapper_sizes: function (v, view) {
-                    var config = view.$getConfig();
-                    var res,
-                        wrapper_size = config.link_wrapper_width,
-                        y = v.y + (config.row_height - wrapper_size) / 2;
-                    switch (v.direction) {
-                        case this.dirs.left:
-                            res = {
-                                top: y,
-                                height: wrapper_size,
-                                lineHeight: wrapper_size,
-                                left: v.x - v.size - wrapper_size / 2,
-                                width: v.size + wrapper_size
-                            };
-                            break;
-                        case this.dirs.right:
-                            res = {
-                                top: y,
-                                lineHeight: wrapper_size,
-                                height: wrapper_size,
-                                left: v.x - wrapper_size / 2,
-                                width: v.size + wrapper_size
-                            };
-                            break;
-                        case this.dirs.up:
-                            res = {
-                                top: y - v.size,
-                                lineHeight: v.size + wrapper_size,
-                                height: v.size + wrapper_size,
-                                left: v.x - wrapper_size / 2,
-                                width: wrapper_size
-                            };
-                            break;
-                        case this.dirs.down:
-                            res = {
-                                top: y /*- wrapper_size/2*/,
-                                lineHeight: v.size + wrapper_size,
-                                height: v.size + wrapper_size,
-                                left: v.x - wrapper_size / 2,
-                                width: wrapper_size
-                            };
-                            break;
-                        default:
-                            break;
-                    }
-
-                    return res;
-                },
-                get_line_sizes: function (v, view) {
-                    var config = view.$getConfig();
-                    var res,
-                        line_size = config.link_line_width,
-                        wrapper_size = config.link_wrapper_width,
-                        size = v.size + line_size;
-                    switch (v.direction) {
-                        case this.dirs.left:
-                        case this.dirs.right:
-                            res = {
-                                height: line_size,
-                                width: size,
-                                marginTop: (wrapper_size - line_size) / 2,
-                                marginLeft: (wrapper_size - line_size) / 2
-                            };
-                            break;
-                        case this.dirs.up:
-                        case this.dirs.down:
-                            res = {
-                                height: size,
-                                width: line_size,
-                                marginTop: (wrapper_size - line_size) / 2,
-                                marginLeft: (wrapper_size - line_size) / 2
-                            };
-                            break;
-                        default:
-                            break;
-                    }
-
-
-                    return res;
-                },
-                render_line: function (v, end, view) {
-                    var pos = this.get_wrapper_sizes(v, view);
-                    var wrapper = document.createElement("div");
-                    wrapper.style.cssText = [
-                        "top:" + pos.top + "px",
-                        "left:" + pos.left + "px",
-                        "height:" + pos.height + "px",
-                        "width:" + pos.width + "px"
-                    ].join(';');
-                    wrapper.className = "gantt_line_wrapper";
-
-                    var innerPos = this.get_line_sizes(v, view);
-                    var inner = document.createElement("div");
-                    inner.style.cssText = [
-                        "height:" + innerPos.height + "px",
-                        "width:" + innerPos.width + "px",
-                        "margin-top:" + innerPos.marginTop + "px",
-                        "margin-left:" + innerPos.marginLeft + "px"
-                    ].join(";");
-
-                    inner.className = "gantt_link_line_" + v.direction;
-                    wrapper.appendChild(inner);
-
-                    return wrapper;
-                },
-                _get_line: function (from, to) {
-                    var direction = this.get_direction(from, to);
-                    var vect = {
-                        x: from.x,
-                        y: from.y,
-                        direction: this.get_direction(from, to)
-                    };
-                    if (direction == this.dirs.left || direction == this.dirs.right) {
-                        vect.size = Math.abs(from.x - to.x);
-                    } else {
-                        vect.size = Math.abs(from.y - to.y);
-                    }
-                    return vect;
-                },
-                get_direction: function (from, to) {
-                    var direction = 0;
-                    if (to.x < from.x) {
-                        direction = this.dirs.left;
-                    } else if (to.x > from.x) {
-                        direction = this.dirs.right;
-                    } else if (to.y > from.y) {
-                        direction = this.dirs.down;
-                    } else {
-                        direction = this.dirs.up;
-                    }
-                    return direction;
-                }
-
-            };
-
-            var path_builder = {
+            var e = {
                 current_pos: null,
                 dirs: {left: "left", right: "right", up: "up", down: "down"},
                 path: [],
-                /*	clear: function () {
-                        this.path = [];
-                    },*/
-                //pro
                 clear: function () {
                     this.current_pos = null, this.path = []
                 },
-                //pro
-                current: function () {
-                    return this.path[this.path.length - 1];
+                point: function (e) {
+                    this.current_pos = t.copy(e)
                 },
-                point: function (next) {
-                    if (!next)
-                        return this.current();
-
-                    this.path.push(gantt.copy(next));
-                    return next;
+                get_lines: function (t) {
+                    this.clear(), this.point(t[0]);
+                    for (var e = 1; e < t.length; e++) this.line_to(t[e]);
+                    return this.get_path()
                 },
-                point_to: function (direction, diff, point) {
-                    if (!point)
-                        point = gantt.copy(this.point());
-                    else
-                        point = {x: point.x, y: point.y};
-                    var dir = drawer.dirs;
-                    switch (direction) {
-                        case (dir.left):
-                            point.x -= diff;
+                line_to: function (e) {
+                    var i = t.copy(e), n = this.current_pos, r = this._get_line(n, i);
+                    this.path.push(r), this.current_pos = i
+                },
+                get_path: function () {
+                    return this.path
+                },
+                get_wrapper_sizes: function (t, e) {
+                    var i, n = e.$getConfig(), r = n.link_wrapper_width, a = t.y + (n.row_height - r) / 2;
+                    switch (t.direction) {
+                        case this.dirs.left:
+                            i = {top: a, height: r, lineHeight: r, left: t.x - t.size - r / 2, width: t.size + r};
                             break;
-                        case (dir.right):
-                            point.x += diff;
+                        case this.dirs.right:
+                            i = {top: a, lineHeight: r, height: r, left: t.x - r / 2, width: t.size + r};
                             break;
-                        case (dir.up):
-                            point.y -= diff;
+                        case this.dirs.up:
+                            i = {
+                                top: a - t.size,
+                                lineHeight: t.size + r,
+                                height: t.size + r,
+                                left: t.x - r / 2,
+                                width: r
+                            };
                             break;
-                        case (dir.down):
-                            point.y += diff;
-                            break;
-                        default:
-                            break;
+                        case this.dirs.down:
+                            i = {top: a, lineHeight: t.size + r, height: t.size + r, left: t.x - r / 2, width: r}
                     }
-                    return this.point(point);
+                    return i
                 },
-                get_points: function (link, view) {
-                    var pt = this.get_endpoint(link, view);
-                    var xy = gantt.config;
-
-                    var dy = pt.e_y - pt.y;
-                    var dx = pt.e_x - pt.x;
-
-                    var dir = drawer.dirs;
-
-                    this.clear();
-                    this.point({x: pt.x, y: pt.y});
-
-                    var shiftX = 2 * xy.link_arrow_size;//just random size for first line
-                    var lineType = this.get_line_type(link, view.$getConfig());
-
-                    var forward = (pt.e_x > pt.x);
-                    if (lineType.from_start && lineType.to_start) {
-                        this.point_to(dir.left, shiftX);
-                        if (forward) {
-                            this.point_to(dir.down, dy);
-                            this.point_to(dir.right, dx);
-                        } else {
-                            this.point_to(dir.right, dx);
-                            this.point_to(dir.down, dy);
-                        }
-                        this.point_to(dir.right, shiftX);
-
-                    } else if (!lineType.from_start && lineType.to_start) {
-                        forward = (pt.e_x > (pt.x + 2 * shiftX));
-                        this.point_to(dir.right, shiftX);
-                        if (forward) {
-                            dx -= shiftX;
-                            this.point_to(dir.down, dy);
-                            this.point_to(dir.right, dx);
-                        } else {
-                            dx -= 2 * shiftX;
-                            var sign = dy > 0 ? 1 : -1;
-
-                            this.point_to(dir.down, sign * (xy.row_height / 2));
-                            this.point_to(dir.right, dx);
-                            this.point_to(dir.down, sign * ( Math.abs(dy) - (xy.row_height / 2)));
-                            this.point_to(dir.right, shiftX);
-                        }
-
-                    } else if (!lineType.from_start && !lineType.to_start) {
-                        this.point_to(dir.right, shiftX);
-                        if (forward) {
-                            this.point_to(dir.right, dx);
-                            this.point_to(dir.down, dy);
-                        } else {
-                            this.point_to(dir.down, dy);
-                            this.point_to(dir.right, dx);
-                        }
-                        this.point_to(dir.left, shiftX);
-                    } else if (lineType.from_start && !lineType.to_start) {
-
-                        forward = (pt.e_x > (pt.x - 2 * shiftX));
-                        this.point_to(dir.left, shiftX);
-
-                        if (!forward) {
-                            dx += shiftX;
-                            this.point_to(dir.down, dy);
-                            this.point_to(dir.right, dx);
-                        } else {
-                            dx += 2 * shiftX;
-                            var sign = dy > 0 ? 1 : -1;
-                            this.point_to(dir.down, sign * (xy.row_height / 2));
-                            this.point_to(dir.right, dx);
-                            this.point_to(dir.down, sign * ( Math.abs(dy) - (xy.row_height / 2)));
-                            this.point_to(dir.left, shiftX);
-                        }
-
+                get_line_sizes: function (t, e) {
+                    var i, n = e.$getConfig(), r = n.link_line_width, a = n.link_wrapper_width, o = t.size + r;
+                    switch (t.direction) {
+                        case this.dirs.left:
+                        case this.dirs.right:
+                            i = {height: r, width: o, marginTop: (a - r) / 2, marginLeft: (a - r) / 2};
+                            break;
+                        case this.dirs.up:
+                        case this.dirs.down:
+                            i = {height: o, width: r, marginTop: (a - r) / 2, marginLeft: (a - r) / 2}
                     }
-
-                    return this.path;
+                    return i
                 },
-                get_line_type: function(link, config){
-                    var types = config.links;
-                    var from_start = false, to_start = false;
-                    if (link.type == types.start_to_start) {
-                        from_start = to_start = true;
-                    } else if (link.type == types.finish_to_finish) {
-                        from_start = to_start = false;
-                    } else if (link.type == types.finish_to_start) {
-                        from_start = false;
-                        to_start = true;
-                    } else if (link.type == types.start_to_finish) {
-                        from_start = true;
-                        to_start = false;
-                    } else {
-                        gantt.assert(false, "Invalid link type");
-                    }
-
-                    if(config.rtl){
-                        from_start = !from_start;
-                        to_start = !to_start;
-                    }
-
-                    return {from_start: from_start, to_start: to_start};
+                render_line: function (t, e, i) {
+                    var n = this.get_wrapper_sizes(t, i), r = document.createElement("div");
+                    r.style.cssText = ["top:" + n.top + "px", "left:" + n.left + "px", "height:" + n.height + "px", "width:" + n.width + "px"].join(";"), r.className = "gantt_line_wrapper";
+                    var a = this.get_line_sizes(t, i), o = document.createElement("div");
+                    return o.style.cssText = ["height:" + a.height + "px", "width:" + a.width + "px", "margin-top:" + a.marginTop + "px", "margin-left:" + a.marginLeft + "px"].join(";"), o.className = "gantt_link_line_" + t.direction, r.appendChild(o), r
                 },
-
-                get_endpoint: function (link, view) {
-                    var config = view.$getConfig();
-
-                    var lineType = this.get_line_type(link, config);
-                    var from_start = lineType.from_start,
-                        to_start = lineType.to_start;
-
-                    var source = gantt.getTask(link.source);
-                    var target = gantt.getTask(link.target);
-
-                    var from = getMilestonePosition(source, view),
-                        to = getMilestonePosition(target, view);
-
-                    return {
-                        x: from_start ? from.left : (from.left + from.width),
-                        e_x: to_start ? to.left : (to.left + to.width),
-                        y: from.top,
-                        e_y: to.top
-                    };
+                _get_line: function (t, e) {
+                    var i = this.get_direction(t, e), n = {x: t.x, y: t.y, direction: this.get_direction(t, e)};
+                    return i == this.dirs.left || i == this.dirs.right ? n.size = Math.abs(t.x - e.x) : n.size = Math.abs(t.y - e.y), n
+                },
+                get_direction: function (t, e) {
+                    return e.x < t.x ? this.dirs.left : e.x > t.x ? this.dirs.right : e.y > t.y ? this.dirs.down : this.dirs.up
+                }
+            }, i = {
+                path: [], clear: function () {
+                    this.path = []
+                }, current: function () {
+                    return this.path[this.path.length - 1]
+                }, point: function (e) {
+                    return e ? (this.path.push(t.copy(e)), e) : this.current()
+                }, point_to: function (i, n, r) {
+                    r = r ? {x: r.x, y: r.y} : t.copy(this.point());
+                    var a = e.dirs;
+                    switch (i) {
+                        case a.left:
+                            r.x -= n;
+                            break;
+                        case a.right:
+                            r.x += n;
+                            break;
+                        case a.up:
+                            r.y -= n;
+                            break;
+                        case a.down:
+                            r.y += n
+                    }
+                    return this.point(r)
+                }, get_points: function (i, n) {
+                    var r = this.get_endpoint(i, n), a = t.config, o = r.e_y - r.y, s = r.e_x - r.x, l = e.dirs;
+                    this.clear(), this.point({x: r.x, y: r.y});
+                    var c = 2 * a.link_arrow_size, u = this.get_line_type(i, n.$getConfig()), d = r.e_x > r.x;
+                    if (u.from_start && u.to_start) this.point_to(l.left, c), d ? (this.point_to(l.down, o), this.point_to(l.right, s)) : (this.point_to(l.right, s), this.point_to(l.down, o)), this.point_to(l.right, c); else if (!u.from_start && u.to_start) if (d = r.e_x > r.x + 2 * c, this.point_to(l.right, c), d) s -= c, this.point_to(l.down, o), this.point_to(l.right, s); else {
+                        s -= 2 * c;
+                        var h = o > 0 ? 1 : -1;
+                        this.point_to(l.down, h * (a.row_height / 2)), this.point_to(l.right, s), this.point_to(l.down, h * (Math.abs(o) - a.row_height / 2)), this.point_to(l.right, c)
+                    } else u.from_start || u.to_start ? u.from_start && !u.to_start && (d = r.e_x > r.x - 2 * c, this.point_to(l.left, c), d ? (s += 2 * c, h = o > 0 ? 1 : -1, this.point_to(l.down, h * (a.row_height / 2)), this.point_to(l.right, s), this.point_to(l.down, h * (Math.abs(o) - a.row_height / 2)), this.point_to(l.left, c)) : (s += c, this.point_to(l.down, o), this.point_to(l.right, s))) : (this.point_to(l.right, c), d ? (this.point_to(l.right, s), this.point_to(l.down, o)) : (this.point_to(l.down, o), this.point_to(l.right, s)), this.point_to(l.left, c));
+                    return this.path
+                }, get_line_type: function (e, i) {
+                    var n = i.links, r = !1, a = !1;
+                    return e.type == n.start_to_start ? r = a = !0 : e.type == n.finish_to_finish ? r = a = !1 : e.type == n.finish_to_start ? (r = !1, a = !0) : e.type == n.start_to_finish ? (r = !0, a = !1) : t.assert(!1, "Invalid link type"), i.rtl && (r = !r, a = !a), {
+                        from_start: r,
+                        to_start: a
+                    }
+                }, get_endpoint: function (e, i) {
+                    var r = i.$getConfig(), a = this.get_line_type(e, r), o = a.from_start, s = a.to_start,
+                        l = t.getTask(e.source), c = t.getTask(e.target), u = n(l, i), d = n(c, i);
+                    return {x: o ? u.left : u.left + u.width, e_x: s ? d.left : d.left + d.width, y: u.top, e_y: d.top}
                 }
             };
 
-            function getMilestonePosition(task, view){
-                var config = view.$getConfig();
-                var pos = view.getItemPosition(task);
-                if(gantt.getTaskType(task.type) == config.types.milestone){
-                    var milestoneHeight = gantt.getTaskHeight();
-                    var milestoneWidth = Math.sqrt(2*milestoneHeight*milestoneHeight);
-                    pos.left -= milestoneWidth / 2;
-                    pos.width = milestoneWidth;
+            function n(e, i) {
+                var n = i.$getConfig(), r = i.getItemPosition(e);
+                if (t.getTaskType(e.type) == n.types.milestone) {
+                    var a = t.getTaskHeight(), o = Math.sqrt(2 * a * a);
+                    r.left -= o / 2, r.width = o
                 }
-                return pos;
+                return r
             }
-            return _render_link_element;
+
+            return function (n, r) {
+                var a = r.$getConfig(), o = i.get_endpoint(n, r), s = o.e_y - o.y;
+                if (!(o.e_x - o.x || s)) return null;
+                var l = i.get_points(n, r), c = e.get_lines(l, r), u = document.createElement("div"),
+                    d = "gantt_task_link";
+                n.color && (d += " gantt_link_inline_color");
+                var h = t.templates.link_class ? t.templates.link_class(n) : "";
+                h && (d += " " + h), a.highlight_critical_path && t.isCriticalLink && t.isCriticalLink(n) && (d += " gantt_critical_link"), u.className = d, r.$config.link_attribute && u.setAttribute(r.$config.link_attribute, n.id);
+                for (var f = 0; f < c.length; f++) {
+                    f == c.length - 1 && (c[f].size -= a.link_arrow_size);
+                    var _ = e.render_line(c[f], c[f + 1], r);
+                    n.color && (_.firstChild.style.backgroundColor = n.color), u.appendChild(_)
+                }
+                var g = c[c.length - 1].direction, p = function (t, i, n) {
+                    var r = n.$getConfig(), a = document.createElement("div"), o = t.y, s = t.x, l = r.link_arrow_size,
+                        c = r.row_height, u = "gantt_link_arrow gantt_link_arrow_" + i;
+                    switch (i) {
+                        case e.dirs.right:
+                            o -= (l - c) / 2, s -= l;
+                            break;
+                        case e.dirs.left:
+                            o -= (l - c) / 2;
+                            break;
+                        case e.dirs.up:
+                            s -= l;
+                            break;
+                        case e.dirs.down:
+                            o += 2 * l, s -= l
+                    }
+                    return a.style.cssText = ["top:" + o + "px", "left:" + s + "px"].join(";"), a.className = u, a
+                }(l[l.length - 1], g, r);
+                return n.color && (p.style.borderColor = n.color), u.appendChild(p), t._waiAria.linkAttr(n, u), u
+            }
         }
-    },
-        function (t, e) {
+    }, function (t, e) {
         t.exports = function (t) {
-            // "./sources/core/ui/render/task_bg_render.js":
-            //this.getTaskTop
-            function _render_bg_line(item, view) {
-                var config = view.$getConfig(),
-                    templates = view.$getTemplates();
-                var cfg = view.getScale();
-                var count = cfg.count;
-                var row = document.createElement("div");
-                if (config.show_task_cells) {
-                    for (var j = 0; j < count; j++) {
-                        var width = cfg.width[j],
-                            cssclass = "";
-
-                        if (width > 0) {//do not render skipped columns
-                            var cell = document.createElement("div");
-                            cell.style.width = (width) + "px";
-
-                            cssclass = "gantt_task_cell" + (j == count - 1 ? " gantt_last_cell" : "");
-                            cssTemplate = templates.task_cell_class(item, cfg.trace_x[j]);
-                            if (cssTemplate)
-                                cssclass += " " + cssTemplate;
-                            cell.className = cssclass;
-
-                            row.appendChild(cell);
-                        }
-
+            return function (e, i) {
+                var n = i.$getConfig(), r = i.$getTemplates(), a = i.getScale(), o = a.count,
+                    s = document.createElement("div");
+                if (n.show_task_cells) for (var l = 0; l < o; l++) {
+                    var c = a.width[l], u = "";
+                    if (c > 0) {
+                        var d = document.createElement("div");
+                        d.style.width = c + "px", u = "gantt_task_cell" + (l == o - 1 ? " gantt_last_cell" : ""), (f = r.task_cell_class(e, a.trace_x[l])) && (u += " " + f), d.className = u, s.appendChild(d)
                     }
                 }
-                var odd = gantt.getGlobalTaskIndex(item.id) % 2 !== 0;
-                var cssTemplate = templates.task_row_class(item.start_date, item.end_date, item);
-                var css = "gantt_task_row" + (odd ? " odd" : "") + (cssTemplate ? ' ' + cssTemplate : '');
-
-                var store = view.$config.rowStore;
-                if(store.getSelectedId() == item.id) {
-                    css += " gantt_selected";
-                }
-
-                //var row = "<div class='" + css + "' " + this.config.task_attribute + "='" + item.id + "'>" + cells.join("") + "</div>";
-
-                row.className = css;
-
-                if (config.smart_rendering) {
-                    row.style.position = "absolute";
-                    row.style.top = view.getItemTop(item.id) + "px";
-                    row.style.width = "100%";
-                }
-                row.style.height = (config.row_height) + "px";
-
-                if(view.$config.item_attribute){
-                    row.setAttribute(view.$config.item_attribute, item.id);
-                }
-
-                return row;
+                var h = t.getGlobalTaskIndex(e.id) % 2 != 0, f = r.task_row_class(e.start_date, e.end_date, e),
+                    _ = "gantt_task_row" + (h ? " odd" : "") + (f ? " " + f : "");
+                return i.$config.rowStore.getSelectedId() == e.id && (_ += " gantt_selected"), s.className = _, n.smart_rendering && (s.style.position = "absolute", s.style.top = i.getItemTop(e.id) + "px", s.style.width = "100%"), s.style.height = n.row_height + "px", i.$config.item_attribute && s.setAttribute(i.$config.item_attribute, e.id), s
             }
-
-            return _render_bg_line;
         }
     }, function (t, e, i) {
         t.exports = function (t) {
             var e = i(34)(t);
-            return function show_children(task, timeline) {
-                if (gantt.isSplitTask(task)) {
-                    var el = document.createElement('div'),
-                        sizes = gantt.getTaskPosition(task);
-
-                    var sub_tasks = gantt.getChildren(task.id);
-
-
-                    for (var i = 0; i < sub_tasks.length; i++) {
-                        var child = gantt.getTask(sub_tasks[i]);
-
-                        var element = e(child, timeline);
-                        if(!element)
-                            continue;
-
-                        var padding = Math.floor((gantt.config.row_height - sizes.height) / 2);
-
-                        element.style.top = (sizes.top + padding) + "px";
-                        element.className += " gantt_split_child";
-
-                        el.appendChild(element);
+            return function (i, n) {
+                if (t.isSplitTask(i)) {
+                    for (var r = document.createElement("div"), a = t.getTaskPosition(i), o = t.getChildren(i.id), s = 0; s < o.length; s++) {
+                        var l = t.getTask(o[s]), c = e(l, n);
+                        if (c) {
+                            var u = Math.floor((t.config.row_height - a.height) / 2);
+                            c.style.top = a.top + u + "px", c.className += " gantt_split_child", r.appendChild(c)
+                        }
                     }
-                    return el;
+                    return r
                 }
-                return false;
-            };
+                return !1
+            }
         }
     }, function (t, e, i) {
         t.exports = function (t) {
@@ -10684,7 +10096,6 @@ This software is covered by DHTMLX Evaluation License. Contact sales@dhtmlx.com 
                             var e = document.createElement("div");
                             e.className = "gantt_task_cell";
                             var i = document.createElement("div");
-                            //这个是standard 没有的（gantt_task_row）
                             i.className = "gantt_task_row", i.appendChild(e), t.appendChild(i);
                             var n = getComputedStyle(i), r = getComputedStyle(e), a = {
                                 bottomBorderWidth: n.getPropertyValue("border-bottom-width").replace("px", ""),
@@ -11201,137 +10612,56 @@ This software is covered by DHTMLX Evaluation License. Contact sales@dhtmlx.com 
         }(r);
         t.exports = o
     }, function (t, e) {
-          /*  "./sources/core/ui/render/render_factory.js":*/
         t.exports = function (t) {
-            var gantt = t;
-            var services = gantt.$services;
+            var e = t.$services, i = {}, n = {};
 
-            //hash of dom elements is needed to redraw single bar/link
-            var task_area_pulls = {},
-                task_area_renderers = {};
-            function getRenderer(id, layer, node) {
-
-                if (task_area_renderers[id])
-                    return task_area_renderers[id];
-
-                if (!layer.renderer)
-                    gantt.assert(false, "Invalid renderer call");
-
-                var renderOne = function(item){
-                    return layer.renderer.call(this, item, layer.host);
-                } ;
-
-                var filter = layer.filter;
-
-                if (node)
-                    node.setAttribute(services.config().layer_attribute, true);
-
-                task_area_renderers[id] = {
-                    render_item: function (item, container) {
-                        container = container || node;
-
-                        if (filter) {
-                            if (!filter(item)) {
-                                this.remove_item(item.id);
-                                return;
-                            }
-                        }
-
-                        var dom = renderOne.call(gantt, item);
-                        this.append(item, dom, container);
-
-                    },
-
-                    clear: function (container) {
-
-                        this.rendered = task_area_pulls[id] = {};
-                        if(!layer.append)
-                            this.clear_container(container);
-                    },
-                    clear_container: function (container) {
-                        container = container || node;
-                        if (container)
-                            container.innerHTML = "";
-                    },
-                    render_items: function (items, container) {
-                        container = container || node;
-
-                        var buffer = document.createDocumentFragment();
-                        this.clear(container);
-                        for (var i = 0, vis = items.length; i < vis; i++) {
-                            this.render_item(items[i], buffer);
-                        }
-
-                        container.appendChild(buffer);
-                    },
-                    append: function (item, node, container) {
-                        if (!node) {
-                            if (this.rendered[item.id]) {
-                                this.remove_item(item.id);
-                            }
-                            return;
-                        }
-
-                        if (this.rendered[item.id] && this.rendered[item.id].parentNode) {
-                            this.replace_item(item.id, node);
-                        } else {
-                            container.appendChild(node);
-                        }
-                        this.rendered[item.id] = node;
-
-                    },
-                    replace_item: function (item_id, newNode) {
-                        var item = this.rendered[item_id];
-                        if (item && item.parentNode) {
-                            item.parentNode.replaceChild(newNode, item);
-                        }
-                        this.rendered[item_id] = newNode;
-                    },
-                    remove_item: function (item_id) {
-                        this.hide(item_id);
-                        delete this.rendered[item_id];
-                    },
-                    hide: function (item_id) {
-                        var item = this.rendered[item_id];
-                        if (item && item.parentNode) {
-                            item.parentNode.removeChild(item);
-                        }
-                    },
-                    restore: function (item) {
-                        var dom = this.rendered[item.id];
-                        if (dom) {
-                            if (!dom.parentNode) {
-                                this.append(item, dom, node);
-                            }
-                        } else {
-                            this.render_item(item, node);
-                        }
-                    },
-                    change_id: function (oldid, newid) {
-                        this.rendered[newid] = this.rendered[oldid];
-                        delete this.rendered[oldid];
-                    },
-                    rendered: task_area_pulls[id],
-                    node: node,
-                    destructor: function () {
-                        this.clear();
-                        delete task_area_renderers[id];
-                        delete task_area_pulls[id];
+            function r(r, a, o) {
+                if (n[r]) return n[r];
+                a.renderer || t.assert(!1, "Invalid renderer call");
+                var s = a.filter;
+                return o && o.setAttribute(e.config().layer_attribute, !0), n[r] = {
+                    render_item: function (e, i) {
+                        if (i = i || o, !s || s(e)) {
+                            var n = function (t) {
+                                return a.renderer.call(this, t, a.host)
+                            }.call(t, e);
+                            this.append(e, n, i)
+                        } else this.remove_item(e.id)
+                    }, clear: function (t) {
+                        this.rendered = i[r] = {}, a.append || this.clear_container(t)
+                    }, clear_container: function (t) {
+                        (t = t || o) && (t.innerHTML = "")
+                    }, render_items: function (t, e) {
+                        e = e || o;
+                        var i = document.createDocumentFragment();
+                        this.clear(e);
+                        for (var n = 0, r = t.length; n < r; n++) this.render_item(t[n], i);
+                        e.appendChild(i)
+                    }, append: function (t, e, i) {
+                        e ? (this.rendered[t.id] && this.rendered[t.id].parentNode ? this.replace_item(t.id, e) : i.appendChild(e), this.rendered[t.id] = e) : this.rendered[t.id] && this.remove_item(t.id)
+                    }, replace_item: function (t, e) {
+                        var i = this.rendered[t];
+                        i && i.parentNode && i.parentNode.replaceChild(e, i), this.rendered[t] = e
+                    }, remove_item: function (t) {
+                        this.hide(t), delete this.rendered[t]
+                    }, hide: function (t) {
+                        var e = this.rendered[t];
+                        e && e.parentNode && e.parentNode.removeChild(e)
+                    }, restore: function (t) {
+                        var e = this.rendered[t.id];
+                        e ? e.parentNode || this.append(t, e, o) : this.render_item(t, o)
+                    }, change_id: function (t, e) {
+                        this.rendered[e] = this.rendered[t], delete this.rendered[t]
+                    }, rendered: i[r], node: o, destructor: function () {
+                        this.clear(), delete n[r], delete i[r]
                     }
-                };
-
-                return task_area_renderers[id];
-            }
-
-            function clearRenderers() {
-                for (var i in task_area_renderers) {
-                    getRenderer(i).destructor();
-                }
+                }, n[r]
             }
 
             return {
-                getRenderer: getRenderer,
-                clearRenderers: clearRenderers
+                getRenderer: r, clearRenderers: function () {
+                    for (var t in n) r(t).destructor()
+                }
             }
         }
     }, function (t, e, i) {

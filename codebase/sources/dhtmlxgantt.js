@@ -2017,7 +2017,9 @@ module.exports = function(gantt) {
 module.exports = function(gantt) {
 
 	gantt.getTaskType = function (type) {
-		return "task";
+		/*vxot
+		return "task";*/
+		return type;
 	};
 };
 

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="../codebase/dhtmlxgantt_nio.js"></script>
+    <link href="../codebase/dhtmlxgantt_nio.css" rel="stylesheet">
+    <script src="testdata.js?v=6.0.4"></script>
+    <script src="../codebase/ext/dhtmlxgantt_multiselect.js"></script>
+    <style>
+    /*    html, body ,div{
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+            overflow: hidden;
+        }*/
+  /*      .gantt_task_content{
+            line-height: 20px;
+        }*/
+/*    .week_scale{ background-color: #13d4c8;}*/
+/*    .weekend{ background: #f4f7f4 ;}
+    .gantt_selected .weekend {
+        background: #f7eb91;
+    }*/
+    .nioBlue{
+        color: #ffffff !important;
+        background-color: #00BEBE;
+        border: 1px solid #00BEBE;
+    }
+  /*  .task_class_nio{
+        top:0px !important;
+    }*/
+
+    .gantt_task_line, .gantt_line_wrapper {
+        margin-top: -9px;
+    }
+    .gantt_side_content {
+        margin-bottom: 7px;
+    }
+    .gantt_task_link .gantt_link_arrow {
+        margin-top: -12px
+    }
+    .gantt_side_content.gantt_right {
+        bottom: 0;
+    }
+
+    </style>
+</head>
+<body>
+<div id="a">
+    <div>
+        <div style="height: 100%; padding: 0px;margin: 0px;overflow: hidden;">
+
+            <div id="gantt_here" style='width:100%; height:800px;'></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    var demo_tasks = {
+        "data": [
+            {"id": 1, "text": "Program Gate",  "progress": 0, "render":"split", "open": true, "start_date": "12-05-2017 00:00"},
+//            {"id": 100, "text": "ES6 G1", "render":"split", "progress": 0, "open": true, "start_date": "12-05-2017 00:00","parent": "1"},
+            {"id": 2, "text": "K0 02/01/19", "start_date": "12-05-2019", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 3, "text": "G0 05/05/19", "start_date": "12-05-2017 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 4, "text": "G1.2", "start_date": "12-08-2017 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 5, "text": "G1.2", "start_date": "12-08-2017 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 6, "text": "G1.3", "start_date": "9-02-2018 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 7, "text": "G1.3", "start_date": "9-02-2018 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 8, "text": "G1.F", "start_date": "12-08-2018 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 9, "text": "G1.5", "start_date": "10-02-2019 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 10, "text": "G1.6", "start_date": "12-08-2019 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 11, "text": "G1.6", "start_date": "12-08-2019 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 12, "text": "G1.7", "start_date": "09-02-2020 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+            {"id": 13, "text": "G1.7", "start_date": "12-08-2020 00:00", "duration": 0, "type": "milestone", "parent": "1", "progress": 0, "open": true},
+
+            {"id": 16, "text": "ES6 G1", "render":"split", "progress": 0, "open": true, "start_date": "12-05-2018 00:00"},
+            {"id": 17, "text": "ES6 G1 G1.1", "start_date": "12-05-2018 00:00", "end_date":"11-6-2018", "parent": "16", "progress": 0, "open": true},
+            {"id": 18, "text": "G1.1", "start_date": "12-05-2018 00:00", "duration": 0, "type": "milestone", "parent": "16", "progress": 0, "open": true},
+            {"id": 19, "text": "ES6 G1 G1.2", "start_date": "11-09-2018 00:00", "end_date":"12-10-2018", "parent": "16", "progress": 0, "open": true},
+            {"id": 20, "text": "G1.2", "start_date": "11-09-2018 00:00", "duration": 0, "type": "milestone", "parent": "16", "progress": 0, "open": true},
+            {"id": 21, "text": "ES6 G1 G1.3", "start_date": "12-05-2019 00:00", "end_date":"13-6-2019", "parent": "16", "progress": 0, "open": true},
+            {"id": 22, "text": "G1.3", "start_date": "12-05-2019 00:00", "duration": 0, "type": "milestone", "parent": "16", "progress": 0, "open": true},
+            {"id": 23, "text": "ES6 G1 G1.F", "start_date": "11-11-2019 00:00", "end_date":"14-12-2019", "parent": "16", "progress": 0, "open": true},
+            {"id": 24, "text": "G1.F", "start_date": "11-11-2019 00:00", "duration": 0, "type": "milestone", "parent": "16", "progress": 0, "open": true},
+            {"id": 25, "text": "ES6 G1 G1.5", "start_date": "12-05-2020 00:00", "end_date":"15-6-2020", "parent": "16", "progress": 0, "open": true},
+            {"id": 26, "text": "G1.5", "start_date": "12-05-2020 00:00", "duration": 0, "type": "milestone", "parent": "16", "progress": 0, "open": true},
+            {"id": 27, "text": "ES6 G1 G1.6", "start_date": "11-11-2020 00:00", "end_date":"16-12-2020", "parent": "16", "progress": 0, "open": true},
+            {"id": 28, "text": "G1.6", "start_date": "11-11-2020 00:00", "duration": 0, "type": "milestone", "parent": "16", "progress": 0, "open": true},
+            {"id": 29, "text": "ES6 G1 G1.7", "start_date": "12-05-2021 00:00", "end_date":"17-6-2021", "parent": "16", "progress": 0, "open": true},
+            {"id": 30, "text": "G1.7", "start_date": "12-05-2021 00:00", "duration": 0, "type": "milestone", "parent": "16", "progress": 0, "open": true},
+            {"id": 31, "text": "ES6 G1 G1.8", "start_date": "11-11-2021 00:00", "end_date":"18-12-2021", "parent": "16", "progress": 0, "open": true},
+            {"id": 32, "text": "G1.8", "start_date": "11-11-2021 00:00", "duration": 0, "type": "milestone", "parent": "16", "progress": 0, "open": true},
+
+            {"id": 33, "text": "ET7 G1", "render":"split", "progress": 0, "open": true, "start_date": "12-05-2019 00:00"},
+            {"id": 34, "text": "ET7 G1.1", "start_date": "12-05-2019 00:00", "end_date":"11-6-2019", "parent": "33", "progress": 0, "open": true},
+            {"id": 35, "text": "G1.1", "start_date": "12-05-2019 00:00", "duration": 0, "type": "milestone", "parent": "33", "progress": 0, "open": true},
+            {"id": 36, "text": "ET7 G1 G1.2", "start_date": "12-08-2019 00:00", "end_date":"12-9-2019", "parent": "33", "progress": 0, "open": true},
+            {"id": 37, "text": "G1.2", "start_date": "12-08-2019 00:00", "duration": 0, "type": "milestone", "parent": "33", "progress": 0, "open": true},
+            {"id": 38, "text": "ET7 G1 G1.3", "start_date": "12-05-2020 00:00", "end_date":"13-6-2020", "parent": "33", "progress": 0, "open": true},
+            {"id": 39, "text": "G1.3", "start_date": "12-05-2020 00:00", "duration": 0, "type": "milestone", "parent": "33", "progress": 0, "open": true},
+            {"id": 40, "text": "ET7 G1 G1.F", "start_date": "11-11-2020 00:00", "end_date":"14-12-2020", "parent": "33", "progress": 0, "open": true},
+            {"id": 41, "text": "G1.F", "start_date": "11-11-2020 00:00", "duration": 0, "type": "milestone", "parent": "33", "progress": 0, "open": true},
+            {"id": 42, "text": "ET7 G1 G1.5", "start_date": "12-05-2021 00:00", "end_date":"15-6-2021", "parent": "33", "progress": 0, "open": true},
+            {"id": 43, "text": "G1.5", "start_date": "12-05-2021 00:00", "duration": 0, "type": "milestone", "parent": "33", "progress": 0, "open": true},
+            {"id": 44, "text": "ET7 G1 G1.6", "start_date": "11-11-2021 00:00", "end_date":"16-12-2021", "parent": "33", "progress": 0, "open": true},
+            {"id": 45, "text": "G1.6", "start_date": "11-11-2021 00:00", "duration": 0, "type": "milestone", "parent": "33", "progress": 0, "open": true},
+
+            {"id": 46, "text": "EE7 G1", "render":"split", "progress": 0, "open": true, "start_date": "08-07-2020 00:00"},
+            {"id": 47, "text": "EE7 G1 G1.1", "start_date": "08-07-2020 00:00", "end_date":"18-7-2020", "parent": "46", "progress": 0, "open": true},
+            {"id": 48, "text": "G1.1", "start_date": "08-07-2020 00:00", "duration": 0, "type": "milestone", "parent": "46", "progress": 0, "open": true},
+            {"id": 49, "text": "EE7 G1 G1.2", "start_date": "01-12-2020 00:00", "end_date":"11-12-2020", "parent": "46", "progress": 0, "open": true},
+            {"id": 50, "text": "G1.2", "start_date": "01-12-2020 00:00", "duration": 0, "type": "milestone", "parent": "46", "progress": 0, "open": true},
+            {"id": 51, "text": "EE7 G1 G1.3", "start_date": "02-05-2021 00:00", "end_date":"14-6-2021", "parent": "46", "progress": 0, "open": true},
+            {"id": 52, "text": "G1.3", "start_date": "02-05-2021 00:00", "duration": 0, "type": "milestone", "parent": "46", "progress": 0, "open": true},
+            {"id": 53, "text": "EE7 G1 G1.F", "start_date": "01-11-2021 00:00", "end_date":"15-12-2021", "parent": "46", "progress": 0, "open": true},
+            {"id": 54, "text": "G1.F", "start_date": "01-11-2021 00:00", "duration": 0, "type": "milestone", "parent": "46", "progress": 0, "open": true},
+            {"id": 55, "text": "EE7 G1 G1.5", "start_date": "12-05-2023 00:00", "end_date":"16-6-2023", "parent": "46", "progress": 0, "open": true},
+            {"id": 56, "text": "G1.5", "start_date": "12-05-2023 00:00", "duration": 0, "type": "milestone", "parent": "46", "progress": 0, "open": true},
+            {"id": 57, "text": "EE7 G1 G1.6", "start_date": "11-11-2023 00:00", "end_date":"17-12-2023", "parent": "46", "progress": 0, "open": true},
+            {"id": 58, "text": "G1.6", "start_date": "11-11-2023 00:00", "duration": 0, "type": "milestone", "parent": "46", "progress": 0, "open": true},
+        ],
+        "links": [
+        ]
+    };
+
+    gantt.config.columns = [
+        {name:"text",       label:"Project/Version/Issue", min_width: 100, max_width:200, tree:true },
+       /* {name:"start_date", label:"Start time", align:"center" , min_width: 110},
+        {name:"end_date", label:"Finish time", align:"center" , min_width: 110},*/
+       /* {name:"duration",   label:"Duration",   align:"center" },
+        {name:"progress",   label:"Percent",   align:"center", template:function(obj){
+            return ((parseFloat(obj.progress ).toFixed(4)) * 100).toFixed(0) + '%'; } },*/
+        /*{name:"add",        label:"",           width:44 }*/
+    ];
+
+    gantt.templates.grid_header_class = function(columnName, column){
+        return "nioBlue";
+    };
+
+    var daysStyle = function(date){
+        if(date.getDay()==0||date.getDay()==6){
+            return "weekend";
+        }else{
+            return "";
+        }
+    };
+
+    gantt.templates.task_cell_class = function (item, date) {
+        if (date.getDay() == 0 || date.getDay() == 6) {
+            return "weekend"
+        }
+    };
+
+    gantt.templates.scale_cell_class = function(date){
+        return 'nioBlue';
+    };
+
+    gantt.config.fit_tasks = true;
+
+    gantt.config.scale_unit = "year";  //"minute", "hour", "day", "week", "quarter", "month", "year"
+    gantt.config.step = 1;
+    //D 星期， j  d  几号，  F  月份, M 月份，W week,
+    gantt.config.date_scale = "%d %M %Y"; //Default value: "%d %M"；
+    gantt.config.subscales = [
+        {unit: "month", step: 1, date: "%F", css: daysStyle}
+    ];
+    gantt.config.scale_height = 50;
+    gantt.config.min_column_width = 60;
+    gantt.config.order_branch = 'marker';
+//    gantt.config.task_height = 15;
+
+    gantt.config.task_height = 16;
+    gantt.config.row_height = 40;
+
+
+    var opts = [
+        { key: 1, label: 'High' },
+        { key: 2, label: 'Normal' },
+        { key: 3, label: 'Low' }
+    ];
+
+    gantt.locale.labels.section_priority = "Priority";
+
+    gantt.config.lightbox.sections = [
+        {name:"description", height:38, map_to:"text", type:"textarea", focus:true},
+        {name:"priority",    height:22, map_to:"priority", type:"select", options:opts},
+        {name:"time",        height:72, map_to:"auto", type:"duration"}
+    ];
+//  定义左侧、右侧 显示文字
+//    leftside_text
+    gantt.templates.bottom_text = function(start, end, task){
+        if(task.type == gantt.config.types.milestone){
+            return task.text;
+        }
+        return "";
+    };
+
+    gantt.templates.rightside_text = function(start, end, task){
+        if(!task.type || task.type == gantt.config.types.task){
+            return task.text;
+        }
+        return "";
+    };
+    gantt.templates.task_text=function(start, end, task){
+        return "";
+    };
+
+    gantt.init("gantt_here");
+    gantt.parse(demo_tasks);
+
+</script>
+</body>
+</html>

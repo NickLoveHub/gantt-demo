@@ -80,8 +80,8 @@
 	});
 
 	gantt.templates.task_class = function (start, end, task) {
-		if (task.planned_end)  classes = ['has-baseline'];{
-                var
+		if (task.planned_end) {
+			var classes = ['has-baseline'];
 			if (end.getTime() > task.planned_end.getTime()) {
 				classes.push('overdue');
 			}

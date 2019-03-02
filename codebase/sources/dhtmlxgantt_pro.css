@@ -1,11 +1,11 @@
-.gridHoverStyle, .gridSelection, .timelineSelection {
+.gridHoverStyle,.gridSelection,.timelineSelection {
     background-color: #fff3a1
 }
 
 .gantt_grid_scale .gantt_grid_head_cell {
     color: #a6a6a6;
-    border-top: none !important;
-    border-right: none !important
+    border-top: none!important;
+    border-right: none!important
 }
 
 .gantt_grid_data .gantt_cell {
@@ -24,7 +24,7 @@
     margin-top: -3px
 }
 
-.gantt_task_link .gantt_link_arrow_down, .gantt_task_link .gantt_link_arrow_up {
+.gantt_task_link .gantt_link_arrow_down,.gantt_task_link .gantt_link_arrow_up {
     border-width: 6px
 }
 
@@ -44,11 +44,11 @@
     border-right: 1px solid #ebebeb
 }
 
-.gantt_row.gantt_project, .gantt_row.odd.gantt_project {
+.gantt_row.gantt_project,.gantt_row.odd.gantt_project {
     background-color: #edffef
 }
 
-.gantt_task_row.gantt_project, .gantt_task_row.odd.gantt_project {
+.gantt_task_row.gantt_project,.gantt_task_row.odd.gantt_project {
     background-color: #f5fff6
 }
 
@@ -89,13 +89,13 @@
 }
 
 .gantt_cal_light_wide {
-    padding-left: 0 !important;
-    padding-right: 0 !important
+    padding-left: 0!important;
+    padding-right: 0!important
 }
 
 .gantt_cal_light_wide .gantt_cal_larea {
-    border-left: none !important;
-    border-right: none !important
+    border-left: none!important;
+    border-right: none!important
 }
 
 .gantt_popup_button.gantt_ok_button {
@@ -116,7 +116,7 @@
 }
 
 .gantt_popup_shadow {
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, .07)
+    box-shadow: 3px 3px 3px rgba(0,0,0,.07)
 }
 
 .gantt_qi_big_icon.icon_edit {
@@ -132,14 +132,14 @@
 }
 
 .gantt_tooltip {
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, .07);
-    border-left: 1px solid rgba(0, 0, 0, .07);
-    border-top: 1px solid rgba(0, 0, 0, .07);
+    box-shadow: 3px 3px 3px rgba(0,0,0,.07);
+    border-left: 1px solid rgba(0,0,0,.07);
+    border-top: 1px solid rgba(0,0,0,.07);
     font-size: 8pt;
     color: #454545
 }
 
-.gantt_container, .gantt_tooltip {
+.gantt_container,.gantt_tooltip {
     background-color: #fff;
     font-family: Arial
 }
@@ -157,7 +157,7 @@
     overflow-x: scroll
 }
 
-.gantt_grid, .gantt_task {
+.gantt_grid,.gantt_task {
     position: relative;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -165,14 +165,14 @@
     vertical-align: top
 }
 
-.gantt_grid_scale, .gantt_task_scale {
+.gantt_grid_scale,.gantt_task_scale {
     color: #6b6b6b;
     font-size: 12px;
     border-bottom: 1px solid #cecece;
     box-sizing: border-box
 }
 
-.gantt_grid_scale, .gantt_task_scale, .gantt_task_vscroll {
+.gantt_grid_scale,.gantt_task_scale,.gantt_task_vscroll {
     background-color: #fff
 }
 
@@ -220,7 +220,7 @@
     -moz-user-select: -moz-none
 }
 
-.gantt_add, .gantt_grid_head_add {
+.gantt_add,.gantt_grid_head_add {
     width: 100%;
     height: 100%;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTQ3MjMyMENDNkI0MTFFMjk4MTI5QTg3MDhFNDVDQTkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTQ3MjMyMERDNkI0MTFFMjk4MTI5QTg3MDhFNDVDQTkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NDcyMzIwQUM2QjQxMUUyOTgxMjlBODcwOEU0NUNBOSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1NDcyMzIwQkM2QjQxMUUyOTgxMjlBODcwOEU0NUNBOSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PshZT8UAAABbSURBVHjaYrTdeZmBEsCER+4wEP+H4sPkGGCDg020ARR7gb4GIAcYDKMDdPnDyAbYkGG5DVW9cIQMvUdBBAuUY4vDz8iAcZinA2zgCHqAYQMseAywJcYFAAEGAM+UFGuohFczAAAAAElFTkSuQmCC);
@@ -234,10 +234,7 @@
 
 .gantt_grid_head_cell.gantt_grid_head_add {
     -moz-opacity: .6;
-    opacity: 1;
-    /*vxot
-    opacity: 0.6;
-    vxot end*/
+    opacity: .6;
     top: 0
 }
 
@@ -246,30 +243,30 @@
     opacity: 1
 }
 
-.gantt_grid_data .gantt_row.odd:hover, .gantt_grid_data .gantt_row:hover {
+.gantt_grid_data .gantt_row.odd:hover,.gantt_grid_data .gantt_row:hover {
     background-color: #fff3a1
 }
 
-.gantt_grid_data .gantt_row.odd:hover .gantt_add, .gantt_grid_data .gantt_row:hover .gantt_add {
+.gantt_grid_data .gantt_row.odd:hover .gantt_add,.gantt_grid_data .gantt_row:hover .gantt_add {
     -moz-opacity: 1;
     opacity: 1
 }
 
-.gantt_row, .gantt_task_row {
+.gantt_row,.gantt_task_row {
     border-bottom: 1px solid #ebebeb;
     background-color: #fff
 }
 
-.gantt_row.odd, .gantt_task_row.odd {
+.gantt_row.odd,.gantt_task_row.odd {
     background-color: #fff
 }
 
-.gantt_cell, .gantt_grid_head_cell, .gantt_row, .gantt_scale_cell, .gantt_task_cell, .gantt_task_row {
+.gantt_cell,.gantt_grid_head_cell,.gantt_row,.gantt_scale_cell,.gantt_task_cell,.gantt_task_row {
     box-sizing: border-box;
     -moz-box-sizing: border-box
 }
 
-.gantt_grid_head_cell, .gantt_scale_cell {
+.gantt_grid_head_cell,.gantt_scale_cell {
     line-height: inherit
 }
 
@@ -288,7 +285,7 @@
 }
 
 .gantt_drag_marker.gantt_grid_resize_area {
-    background-color: hsla(0, 0%, 91%, .5);
+    background-color: hsla(0,0%,91%,.5);
     border-left: 1px solid #cecece;
     border-right: 1px solid #cecece;
     height: 100%;
@@ -308,7 +305,7 @@
     font-size: 13px
 }
 
-.gantt_grid_data .gantt_last_cell, .gantt_grid_scale .gantt_last_cell, .gantt_task .gantt_task_scale .gantt_scale_cell.gantt_last_cell, .gantt_task_bg .gantt_last_cell {
+.gantt_grid_data .gantt_last_cell,.gantt_grid_scale .gantt_last_cell,.gantt_task .gantt_task_scale .gantt_scale_cell.gantt_last_cell,.gantt_task_bg .gantt_last_cell {
     border-right-width: 0
 }
 
@@ -346,7 +343,7 @@
     z-index: 1
 }
 
-.gantt_ver_scroll > div {
+.gantt_ver_scroll>div {
     width: 1px;
     height: 1px
 }
@@ -364,7 +361,7 @@
     position: absolute
 }
 
-.gantt_hor_scroll > div {
+.gantt_hor_scroll>div {
     width: 5000px;
     height: 1px
 }
@@ -375,7 +372,7 @@
     display: inline-block
 }
 
-.gantt_tree_content, .gantt_tree_icon {
+.gantt_tree_content,.gantt_tree_icon {
     vertical-align: top
 }
 
@@ -385,7 +382,7 @@
     background-position: 50%
 }
 
-.gantt_tree_content, .gantt_tree_icon {
+.gantt_tree_content,.gantt_tree_icon {
     height: 100%;
     display: inline-block
 }
@@ -436,7 +433,7 @@
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAANCAYAAABlyXS1AAAARUlEQVR42mNgQAL1/VP/M2ADIIntF2/9x1AAlrh0C47hCmA60DFYwX88gIFGwNDY5D8uDFbg7hvwHx2jmIBTAlkB0e4BAEjlaNtBWJPnAAAAAElFTkSuQmCC)
 }
 
-.gantt_inserted, .gantt_updated {
+.gantt_inserted,.gantt_updated {
     font-weight: 700
 }
 
@@ -455,7 +452,7 @@
 .gantt_status {
     right: 1px;
     padding: 5px 10px;
-    background: hsla(0, 0%, 61%, .1);
+    background: hsla(0,0%,61%,.1);
     position: absolute;
     top: 1px;
     transition: opacity .2s;
@@ -509,7 +506,7 @@
     text-align: center;
     position: fixed;
     z-index: 20000;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, .07);
+    box-shadow: 3px 3px 3px rgba(0,0,0,.07);
     font-family: Arial;
     border-radius: 6px;
     border: 1px solid #cecece;
@@ -522,7 +519,7 @@
     border-width: 0
 }
 
-.gantt_button, .gantt_popup_button {
+.gantt_button,.gantt_popup_button {
     border: 1px solid #cecece;
     height: 30px;
     line-height: 30px;
@@ -532,7 +529,7 @@
     background: #fff
 }
 
-.gantt-info, .gantt_button, .gantt_popup_button {
+.gantt-info,.gantt_button,.gantt_popup_button {
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: -moz-none;
@@ -564,19 +561,18 @@ div.dhx_modal_cover {
     width: 100%;
     height: 100%;
     border: none;
-    zoom: 1
-}
+    zoom:1}
 
-.gantt-info img, .gantt_modal_box img {
+.gantt-info img,.gantt_modal_box img {
     float: left;
     margin-right: 20px
 }
 
-.gantt-alert-error, .gantt-confirm-error {
+.gantt-alert-error,.gantt-confirm-error {
     border: 1px solid red
 }
 
-.gantt_button input, .gantt_popup_button div {
+.gantt_button input,.gantt_popup_button div {
     border-radius: 4px;
     font-size: 14px;
     box-sizing: content-box;
@@ -600,10 +596,10 @@ div.dhx_modal_cover {
     border-radius: 6px
 }
 
-.gantt-error, .gantt-info {
+.gantt-error,.gantt-info {
     font-size: 14px;
     color: #000;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, .07);
+    box-shadow: 3px 3px 3px rgba(0,0,0,.07);
     padding: 0;
     background-color: #fff;
     border-radius: 3px;
@@ -639,9 +635,9 @@ div.dhx_modal_cover {
     color: #fff
 }
 
-.gantt_data_area div, .gantt_grid div {
+.gantt_data_area div,.gantt_grid div {
     -ms-touch-action: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 .gantt_data_area {
@@ -659,7 +655,7 @@ div.dhx_modal_cover {
     top: 0
 }
 
-.gantt_side_content, .gantt_task_content, .gantt_task_progress {
+.gantt_side_content,.gantt_task_content,.gantt_task_progress {
     line-height: inherit;
     overflow: hidden;
     height: 100%
@@ -679,7 +675,7 @@ div.dhx_modal_cover {
 .gantt_task_progress {
     text-align: center;
     z-index: 0;
-    background: #00BEBE
+    background: #299cb4
 }
 
 .gantt_task_progress_wrapper {
@@ -694,8 +690,8 @@ div.dhx_modal_cover {
     border-radius: 2px;
     position: absolute;
     box-sizing: border-box;
-    background-color: #00BEBE;//vxot
-    border: 1px solid #00BEBE;//vxot
+    background-color: #3db9d3;
+    border: 1px solid #2898b0;
     -webkit-user-select: none;
     -moz-user-select: none;
     -moz-user-select: -moz-none
@@ -705,12 +701,12 @@ div.dhx_modal_cover {
     cursor: move
 }
 
-.gantt_touch_move, .gantt_touch_progress .gantt_touch_resize {
-    transform: scale(1.02, 1.1);
+.gantt_touch_move,.gantt_touch_progress .gantt_touch_resize {
+    transform: scale(1.02,1.1);
     transform-origin: 50%
 }
 
-.gantt_touch_progress .gantt_task_progress_drag, .gantt_touch_resize .gantt_task_drag {
+.gantt_touch_progress .gantt_task_progress_drag,.gantt_touch_resize .gantt_task_drag {
     transform: scaleY(1.3);
     transform-origin: 50%
 }
@@ -732,17 +728,13 @@ div.dhx_modal_cover {
     left: 100%;
     padding-left: 20px
 }
-/*vxot 显示在下方*/
-.gantt_side_content.gantt_bottom {
-    /*top: 15px;*/
-}
-/*vxot 显示在下方 end*/
+
 .gantt_side_content.gantt_link_crossing {
     bottom: 8.75px;
     top: auto
 }
 
-.gantt_link_arrow, .gantt_task_link .gantt_line_wrapper {
+.gantt_link_arrow,.gantt_task_link .gantt_line_wrapper {
     position: absolute;
     cursor: pointer
 }
@@ -799,37 +791,37 @@ div.dhx_modal_cover {
     right: -20px
 }
 
-.gantt_link_target .gantt_link_control div, .gantt_task_line.gantt_drag_move .gantt_link_control div, .gantt_task_line.gantt_drag_move .gantt_task_drag, .gantt_task_line.gantt_drag_move .gantt_task_progress_drag, .gantt_task_line.gantt_drag_progress .gantt_link_control div, .gantt_task_line.gantt_drag_progress .gantt_task_drag, .gantt_task_line.gantt_drag_progress .gantt_task_progress_drag, .gantt_task_line.gantt_drag_resize .gantt_link_control div, .gantt_task_line.gantt_drag_resize .gantt_task_drag, .gantt_task_line.gantt_drag_resize .gantt_task_progress_drag, .gantt_task_line.gantt_selected .gantt_link_control div, .gantt_task_line.gantt_selected .gantt_task_drag, .gantt_task_line.gantt_selected .gantt_task_progress_drag, .gantt_task_line:hover .gantt_link_control div, .gantt_task_line:hover .gantt_task_drag, .gantt_task_line:hover .gantt_task_progress_drag {
+.gantt_link_target .gantt_link_control div,.gantt_task_line.gantt_drag_move .gantt_link_control div,.gantt_task_line.gantt_drag_move .gantt_task_drag,.gantt_task_line.gantt_drag_move .gantt_task_progress_drag,.gantt_task_line.gantt_drag_progress .gantt_link_control div,.gantt_task_line.gantt_drag_progress .gantt_task_drag,.gantt_task_line.gantt_drag_progress .gantt_task_progress_drag,.gantt_task_line.gantt_drag_resize .gantt_link_control div,.gantt_task_line.gantt_drag_resize .gantt_task_drag,.gantt_task_line.gantt_drag_resize .gantt_task_progress_drag,.gantt_task_line.gantt_selected .gantt_link_control div,.gantt_task_line.gantt_selected .gantt_task_drag,.gantt_task_line.gantt_selected .gantt_task_progress_drag,.gantt_task_line:hover .gantt_link_control div,.gantt_task_line:hover .gantt_task_drag,.gantt_task_line:hover .gantt_task_progress_drag {
     display: block
 }
 
-.gantt_link_source, .gantt_link_target {
+.gantt_link_source,.gantt_link_target {
     box-shadow: 0 0 3px #3db9d3
 }
 
-.gantt_link_target.link_finish_allow, .gantt_link_target.link_start_allow {
+.gantt_link_target.link_finish_allow,.gantt_link_target.link_start_allow {
     box-shadow: 0 0 3px #ffbf5e
 }
 
-.gantt_link_target.link_finish_deny, .gantt_link_target.link_start_deny {
+.gantt_link_target.link_finish_deny,.gantt_link_target.link_start_deny {
     box-shadow: 0 0 3px #e87e7b
 }
 
-.link_finish_allow .gantt_link_control.task_end_date div, .link_start_allow .gantt_link_control.task_start_date div {
+.link_finish_allow .gantt_link_control.task_end_date div,.link_start_allow .gantt_link_control.task_start_date div {
     background-color: #ffbf5e;
     border-color: #ffa011
 }
 
-.link_finish_deny .gantt_link_control.task_end_date div, .link_start_deny .gantt_link_control.task_start_date div {
+.link_finish_deny .gantt_link_control.task_end_date div,.link_start_deny .gantt_link_control.task_start_date div {
     background-color: #e87e7b;
     border-color: #dd3e3a
 }
 
 .gantt_link_arrow_right {
     border-width: 4px 0 4px 6px;
-    border-top-color: transparent !important;
-    border-right-color: transparent !important;
-    border-bottom-color: transparent !important;
+    border-top-color: transparent!important;
+    border-right-color: transparent!important;
+    border-bottom-color: transparent!important;
     border-left-color: #ffa011;
     margin-top: -1px
 }
@@ -837,30 +829,30 @@ div.dhx_modal_cover {
 .gantt_link_arrow_left {
     border-width: 4px 6px 4px 0;
     margin-top: -1px;
-    border-top-color: transparent !important;
+    border-top-color: transparent!important;
     border-right-color: #ffa011;
-    border-bottom-color: transparent !important;
-    border-left-color: transparent !important
+    border-bottom-color: transparent!important;
+    border-left-color: transparent!important
 }
 
 .gantt_link_arrow_up {
     border-width: 0 4px 6px;
     border-color: transparent transparent #ffa011;
-    border-top-color: transparent !important;
-    border-right-color: transparent !important;
+    border-top-color: transparent!important;
+    border-right-color: transparent!important;
     border-bottom-color: #ffa011;
-    border-left-color: transparent !important
+    border-left-color: transparent!important
 }
 
 .gantt_link_arrow_down {
     border-width: 4px 6px 0 4px;
     border-top-color: #ffa011;
-    border-right-color: transparent !important;
-    border-bottom-color: transparent !important;
-    border-left-color: transparent !important
+    border-right-color: transparent!important;
+    border-bottom-color: transparent!important;
+    border-left-color: transparent!important
 }
 
-.gantt_task_drag, .gantt_task_progress_drag {
+.gantt_task_drag,.gantt_task_progress_drag {
     cursor: ew-resize;
     display: none;
     position: absolute
@@ -929,7 +921,7 @@ div.dhx_modal_cover {
     position: absolute
 }
 
-.gantt_grid_data .gantt_row.gantt_selected, .gantt_grid_data .gantt_row.odd.gantt_selected, .gantt_task_row.gantt_selected {
+.gantt_grid_data .gantt_row.gantt_selected,.gantt_grid_data .gantt_row.odd.gantt_selected,.gantt_task_row.gantt_selected {
     background-color: #fff3a1
 }
 
@@ -954,7 +946,7 @@ div.dhx_modal_cover {
 }
 
 .gantt_task_line.gantt_milestone div {
-    visibility: visible
+    visibility: visible;
 }
 
 .gantt_task_line.gantt_milestone .gantt_task_content {
@@ -964,7 +956,7 @@ div.dhx_modal_cover {
     border-radius: inherit;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    transform: rotate(45deg)
+    transform: rotate(45deg);
 }
 
 .gantt_task_line.gantt_task_inline_color {
@@ -976,7 +968,7 @@ div.dhx_modal_cover {
     opacity: .2
 }
 
-.gantt_task_line.gantt_task_inline_color.gantt_project.gantt_selected, .gantt_task_line.gantt_task_inline_color.gantt_selected {
+.gantt_task_line.gantt_task_inline_color.gantt_project.gantt_selected,.gantt_task_line.gantt_task_inline_color.gantt_selected {
     box-shadow: 0 0 5px #999
 }
 
@@ -990,10 +982,10 @@ div.dhx_modal_cover {
 }
 
 .gantt_critical_task .gantt_task_progress {
-    background-color: rgba(0, 0, 0, .4)
+    background-color: rgba(0,0,0,.4)
 }
 
-.gantt_critical_link .gantt_line_wrapper > div {
+.gantt_critical_link .gantt_line_wrapper>div {
     background-color: #e63030
 }
 
@@ -1001,7 +993,7 @@ div.dhx_modal_cover {
     border-color: #e63030
 }
 
-.gantt_btn_set:focus, .gantt_cell:focus, .gantt_grid_head_cell:focus, .gantt_popup_button:focus, .gantt_qi_big_icon:focus, .gantt_row:focus {
+.gantt_btn_set:focus,.gantt_cell:focus,.gantt_grid_head_cell:focus,.gantt_popup_button:focus,.gantt_qi_big_icon:focus,.gantt_row:focus {
     box-shadow: inset 0 0 1px 1px #4d90fe
 }
 
@@ -1010,7 +1002,7 @@ div.dhx_modal_cover {
     pointer-events: none
 }
 
-.gantt_unselectable, .gantt_unselectable div {
+.gantt_unselectable,.gantt_unselectable div {
     -webkit-user-select: none;
     -moz-user-select: none;
     -moz-user-select: -moz-none
@@ -1029,7 +1021,7 @@ div.dhx_modal_cover {
     z-index: 10001;
     width: 550px;
     height: 250px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, .07)
+    box-shadow: 3px 3px 3px rgba(0,0,0,.07)
 }
 
 .gantt_cal_light_wide {
@@ -1061,7 +1053,7 @@ div.dhx_modal_cover {
     border-bottom-right-radius: 0
 }
 
-.gantt_cal_ltitle, .gantt_cal_ltitle span {
+.gantt_cal_ltitle,.gantt_cal_ltitle span {
     white-space: nowrap
 }
 
@@ -1099,8 +1091,12 @@ div.dhx_modal_cover {
     border: 1px solid #cecece;
     height: 100%;
     width: 100%;
-    outline: none !important;
+    outline: none!important;
     resize: none
+}
+
+.gantt_section_constraint [data-constraint-time-select] {
+    margin-left: 20px
 }
 
 .gantt_time {
@@ -1232,9 +1228,9 @@ div.dhx_modal_cover {
 
 .gantt_cal_light_wide .gantt_section_time {
     overflow: hidden;
-    padding-top: 2px !important;
+    padding-top: 2px!important;
     padding-right: 0;
-    height: 20px !important
+    height: 20px!important
 }
 
 .gantt_cal_light_wide .gantt_cal_ltext {
@@ -1289,7 +1285,7 @@ div.dhx_modal_cover {
     background-color: #fff;
     white-space: nowrap;
     padding: 2px 10px 5px;
-    padding-top: 2px !important
+    padding-top: 2px!important
 }
 
 .gantt_section_time .gantt_time_selects {
@@ -1312,7 +1308,7 @@ div.dhx_modal_cover {
     line-height: 23px
 }
 
-.gantt_duration .gantt_duration_dec, .gantt_duration .gantt_duration_inc, .gantt_duration .gantt_duration_value {
+.gantt_duration .gantt_duration_dec,.gantt_duration .gantt_duration_inc,.gantt_duration .gantt_duration_value {
     box-sizing: border-box;
     text-align: center;
     vertical-align: top;
@@ -1327,7 +1323,7 @@ div.dhx_modal_cover {
     border-right-width: 0
 }
 
-.gantt_duration .gantt_duration_dec, .gantt_duration .gantt_duration_inc {
+.gantt_duration .gantt_duration_dec,.gantt_duration .gantt_duration_inc {
     width: 20px;
     padding: 1px;
     padding-bottom: 1px;
@@ -1366,7 +1362,7 @@ div.dhx_modal_cover {
     cursor: pointer
 }
 
-.gantt_resource_row input[type=checkbox]:not(:checked), .gantt_resource_row input[type=checkbox]:not(:checked) ~ div {
+.gantt_resource_row input[type=checkbox]:not(:checked),.gantt_resource_row input[type=checkbox]:not(:checked)~div {
     opacity: .5
 }
 
@@ -1406,7 +1402,7 @@ div.dhx_modal_cover {
     vertical-align: middle
 }
 
-.gantt_resource_cell.gantt_resource_cell_value input, .gantt_resource_cell.gantt_resource_cell_value select {
+.gantt_resource_cell.gantt_resource_cell_value input,.gantt_resource_cell.gantt_resource_cell_value select {
     width: 80%;
     vertical-align: middle;
     padding: 1px 2px;
@@ -1429,13 +1425,13 @@ div.dhx_modal_cover {
     border-radius: 6px;
     position: absolute;
     z-index: 300;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, .07);
+    box-shadow: 3px 3px 3px rgba(0,0,0,.07);
     background-color: #fff;
     width: 300px;
-    transition: left .5s ease, right .5s;
-    -moz-transition: left .5s ease, right .5s;
-    -webkit-transition: left .5s ease, right .5s;
-    -o-transition: left .5s ease, right .5s
+    transition: left .5s ease,right .5s;
+    -moz-transition: left .5s ease,right .5s;
+    -webkit-transition: left .5s ease,right .5s;
+    -o-transition: left .5s ease,right .5s
 }
 
 .gantt_no_animate {
@@ -1539,7 +1535,8 @@ div.dhx_modal_cover {
 .gantt_tooltip {
     padding: 10px;
     position: absolute;
-    z-index: 50
+    z-index: 50;
+    white-space: nowrap
 }
 
 .gantt_resource_marker {
@@ -1550,11 +1547,11 @@ div.dhx_modal_cover {
 }
 
 .gantt_resource_marker_ok {
-    background: rgba(78, 208, 134, .75)
+    background: rgba(78,208,134,.75)
 }
 
 .gantt_resource_marker_overtime {
-    background: hsla(0, 100%, 76%, .69)
+    background: hsla(0,100%,76%,.69)
 }
 
 .gantt_histogram_label {
@@ -1567,7 +1564,7 @@ div.dhx_modal_cover {
 }
 
 .gantt_histogram_fill {
-    background-color: rgba(41, 157, 180, .2);
+    background-color: rgba(41,157,180,.2);
     width: 100%;
     position: absolute;
     bottom: 0
@@ -1578,7 +1575,7 @@ div.dhx_modal_cover {
     margin-top: -1px
 }
 
-.gantt_histogram_hor_bar, .gantt_histogram_vert_bar {
+.gantt_histogram_hor_bar,.gantt_histogram_vert_bar {
     position: absolute;
     background: #299db4;
     margin-left: -1px
@@ -1601,7 +1598,7 @@ div.dhx_modal_cover {
     top: 0;
     position: absolute;
     text-align: center;
-    background-color: rgba(255, 0, 0, .4);
+    background-color: rgba(255,0,0,.4);
     box-sizing: border-box
 }
 
@@ -1625,7 +1622,7 @@ div.dhx_modal_cover {
     position: absolute
 }
 
-.gantt_grid_editor_placeholder > div, .gantt_grid_editor_placeholder input, .gantt_grid_editor_placeholder select {
+.gantt_grid_editor_placeholder>div,.gantt_grid_editor_placeholder input,.gantt_grid_editor_placeholder select {
     width: 100%;
     height: 100%;
     box-sizing: border-box
@@ -1635,7 +1632,7 @@ div.dhx_modal_cover {
     opacity: .5
 }
 
-.gantt_row_placeholder .gantt_add, .gantt_row_placeholder .gantt_file {
+.gantt_row_placeholder .gantt_add,.gantt_row_placeholder .gantt_file {
     display: none
 }
 
@@ -1676,6 +1673,18 @@ div.dhx_modal_cover {
     background: transparent
 }
 
+.gantt_overlay_area {
+    display: none
+}
+
+.gantt_overlay,.gantt_overlay_area {
+    position: absolute;
+    height: inherit;
+    width: inherit;
+    top: 0;
+    left: 0
+}
+
 .gantt_layout_content {
     width: 100%;
     overflow: auto;
@@ -1687,7 +1696,7 @@ div.dhx_modal_cover {
     box-sizing: border-box
 }
 
-.gantt_layout_cell > .gantt_layout_header {
+.gantt_layout_cell>.gantt_layout_header {
     background: #33aae8;
     color: #fff;
     font-size: 17px;
@@ -1736,7 +1745,7 @@ div.dhx_modal_cover {
     overflow-x: hidden
 }
 
-.gantt_layout_x > .gantt_layout_cell {
+.gantt_layout_x>.gantt_layout_cell {
     display: inline-block;
     vertical-align: top
 }
@@ -1792,7 +1801,7 @@ div.dhx_modal_cover {
 }
 
 .gantt_resizer_error {
-    background: #cd5c5c !important
+    background: #cd5c5c!important
 }
 
 .gantt_layout_cell_border_left {
@@ -1870,12 +1879,12 @@ div.dhx_modal_cover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, .1);
+    background: rgba(0,0,0,.1);
     z-index: 9999
 }
 
 .gantt_window_drag {
-    cursor: pointer !important
+    cursor: pointer!important
 }
 
 .gantt_window_resizing {
@@ -1883,11 +1892,11 @@ div.dhx_modal_cover {
 }
 
 .gantt_window_resizing_body {
-    overflow: hidden !important
+    overflow: hidden!important
 }
 
 .gantt_window_modal {
-    background: rgba(0, 0, 0, .1);
+    background: rgba(0,0,0,.1);
     z-index: 9999;
     top: 0;
     left: 0;
@@ -1896,7 +1905,7 @@ div.dhx_modal_cover {
     position: fixed
 }
 
-.gantt_cal_light, .gantt_cal_quick_info, .gantt_container, .gantt_message_area, .gantt_modal_box, .gantt_tooltip {
+.gantt_cal_light,.gantt_cal_quick_info,.gantt_container,.gantt_message_area,.gantt_modal_box,.gantt_tooltip {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
@@ -1917,11 +1926,11 @@ div.dhx_modal_cover {
     font-size: 13px
 }
 
-.gantt_drag_marker .gantt_tree_icon.gantt_blank, .gantt_drag_marker .gantt_tree_icon.gantt_close, .gantt_drag_marker .gantt_tree_icon.gantt_open, .gantt_drag_marker .gantt_tree_indent {
+.gantt_drag_marker .gantt_tree_icon.gantt_blank,.gantt_drag_marker .gantt_tree_icon.gantt_close,.gantt_drag_marker .gantt_tree_icon.gantt_open,.gantt_drag_marker .gantt_tree_indent {
     display: none
 }
 
-.gantt_drag_marker, .gantt_drag_marker .gantt_row.odd {
+.gantt_drag_marker,.gantt_drag_marker .gantt_row.odd {
     background-color: #fff
 }
 
@@ -1934,7 +1943,7 @@ div.dhx_modal_cover {
     border-color: #d2d2d2
 }
 
-.gantt_row.gantt_over, .gantt_task_row.gantt_over {
+.gantt_row.gantt_over,.gantt_task_row.gantt_over {
     background-color: #0070fe
 }
 

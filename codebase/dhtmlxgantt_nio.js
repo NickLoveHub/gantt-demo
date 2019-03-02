@@ -2017,7 +2017,9 @@ module.exports = function(gantt) {
 module.exports = function(gantt) {
 
 	gantt.getTaskType = function (type) {
-		return "task";
+        /*vxot
+        return "task";*/
+        return type;
 	};
 };
 
@@ -15774,17 +15776,11 @@ var drawer = {
 };
 
 var path_builder = {
-    current_pos: null,
-    dirs: {left: "left", right: "right", up: "up", down: "down"},
+
 	path: [],
-/*	clear: function () {
+	clear: function () {
 		this.path = [];
-	},*/
-	//pro
-    clear: function () {
-        this.current_pos = null, this.path = []
-    },
-	//pro
+	},
 	current: function () {
 		return this.path[this.path.length - 1];
 	},
@@ -16206,6 +16202,13 @@ function createTaskRenderer(gantt){
 		side = _render_rightside_content(task, cfg, templates);
 		if (side) div.appendChild(side);
 
+		//vxot add
+		side = _render_bottom_content(task, cfg, templates);
+		if (side) {
+            side.style.top = (gantt.config.task_height + 4 ) + 'px';
+            div.appendChild(side);
+        }
+		//vxot add end
 		gantt._waiAria.setTaskBarAttr(task, div);
 
 		var state = gantt.getState();
@@ -16258,7 +16261,12 @@ function createTaskRenderer(gantt){
 		var css = "gantt_left " + _get_link_crossing_css(!cfg.rtl ? true : false, task, cfg);
 		return _render_side_content(task, templates.leftside_text, css);
 	}
-
+	//vxot add 在底部添加文字
+	function _render_bottom_content(task, cfg, templates) {
+		var css = "gantt_bottom " + _get_link_crossing_css(!cfg.rtl ? true : false, task, cfg);
+		return _render_side_content(task, templates.bottom_text, css);
+	}
+	//vxot add end
 	function _render_rightside_content(task, cfg, templates) {
 		var css = "gantt_right " + _get_link_crossing_css(!cfg.rtl ? false : true, task, cfg);
 		return _render_side_content(task, templates.rightside_text, css);
@@ -16676,8 +16684,9 @@ function createTaskRenderer(gantt){
 				if(!element)
 					continue;
 
-				var padding = Math.floor((gantt.config.row_height - sizes.height) / 2);
-
+			/*	vxot
+			var padding = Math.floor((gantt.config.row_height - sizes.height) / 2);*/
+                padding = 0
 				element.style.top = (sizes.top + padding) + "px";
 				element.className += " gantt_split_child";
 
