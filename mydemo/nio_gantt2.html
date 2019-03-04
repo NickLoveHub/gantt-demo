@@ -2,6 +2,8 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="../lib/bootstrap.min.css" rel="stylesheet">
+    <script src="../lib/jquery.min.js"></script>
     <script src="../lib/dhtmlxgantt_nio.js"></script>
     <link href="../lib/dhtmlxgantt_nio.css" rel="stylesheet">
     <style>
@@ -37,6 +39,19 @@
     </style>
 </head>
 <body>
+<div class="container">
+    <div class="radio">
+        <label>
+            <input type="radio" name="optionsRadios" value="month"> Month scale
+        </label>
+        <label>
+            <input type="radio" name="optionsRadios" value="quarter" checked>Quarter scale
+        </label>
+    </div>
+
+</div>
+
+
 <div id="a">
     <div>
         <div style="height: 100%; padding: 0px;margin: 0px;overflow: hidden;">
@@ -90,6 +105,53 @@
         ]
     };
 
+    $(':radio').click(function(){
+        var value = $(this).val()  //获取选中的radio的值
+        setScaleConfig(value);
+        gantt.render();
+    });
+
+    gantt.config.scale_unit = "year";  //"minute", "hour", "day", "week", "quarter", "month", "year"
+    gantt.config.step = 1;
+    //D 星期， j  d  几号，  F  月份, M 月份，W week,
+    gantt.config.date_scale = "%Y"; //Default value: "%d %M"；
+
+    function quarterLabel(date) {
+        var month = date.getMonth();
+        var q_num;
+
+        if (month >= 9) {
+            q_num = 4;
+        } else if (month >= 6) {
+            q_num = 3;
+        } else if (month >= 3) {
+            q_num = 2;
+        } else {
+            q_num = 1;
+        }
+
+        return "Q" + q_num;
+    }
+
+
+
+   function setScaleConfig(value) {
+
+       if(value == 'month'){
+           gantt.config.subscales = [
+               {unit: "month", step: 1, date: "%F", css: daysStyle}
+           ];
+       }else if(value == 'quarter'){
+           gantt.config.subscales = [
+               {unit: "quarter", step: 1, template: quarterLabel},
+           ];
+       }
+
+    }
+
+    setScaleConfig('quarter');
+
+
 /*    var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
     var today = new Date();
     gantt.addMarker({
@@ -127,6 +189,8 @@
         }
     };
 
+
+
     gantt.templates.scale_cell_class = function(date){
         return 'nioBlue';
     };
@@ -135,13 +199,7 @@
     gantt.config.api_date = "%Y-%m-%d %H:%i";
     gantt.config.xml_date = "%Y-%m-%d %H:%i";
 
-    gantt.config.scale_unit = "year";  //"minute", "hour", "day", "week", "quarter", "month", "year"
-    gantt.config.step = 1;
-    //D 星期， j  d  几号，  F  月份, M 月份，W week,
-    gantt.config.date_scale = "%Y"; //Default value: "%d %M"；
-    gantt.config.subscales = [
-        {unit: "month", step: 1, date: "%F", css: daysStyle}
-    ];
+
     gantt.config.scale_height = 50;
     gantt.config.min_column_width = 60;
     gantt.config.order_branch = 'marker';
